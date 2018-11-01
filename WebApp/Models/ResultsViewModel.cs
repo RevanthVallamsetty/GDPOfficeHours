@@ -3,7 +3,10 @@
 *  See LICENSE in the source repository root for complete license information. 
 */
 
+using Microsoft.Graph;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace WebApp_OpenIDConnect_DotNet.Models
@@ -24,6 +27,24 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         {
             Properties = new Dictionary<string, object>();
         }
+    }
+
+    public class EventsItem
+    {
+        public string Id { get; set; }
+        public string Subject { get; set; }
+        public Location Location { get; set; }
+        public List<Attendee> Attendees { get; set; }
+        public ItemBody Body { get; set; }
+        public DateTimeTimeZone StartTime { get; set; }
+        public DateTimeTimeZone EndTime { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Event Date")]
+        public DateTime EventDate { set; get; }
+        public System.DayOfWeek EventDay { get; set; }
+        public string EventStart { get; set; }
+        public string EventEnd { get; set; }
     }
 
     // View model to display a collection of one or more entities returned from the Microsoft Graph. 

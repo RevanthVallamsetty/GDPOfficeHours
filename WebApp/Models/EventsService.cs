@@ -14,11 +14,10 @@ namespace WebApp_OpenIDConnect_DotNet.Models
 {
     public class EventsService
     {
-
         // Get events in all the current user's mail folders.
-        public async Task<List<ResultsItem>> GetMyEvents(GraphServiceClient graphClient)
+        public async Task<List<EventsItem>> GetMyEvents(GraphServiceClient graphClient)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
+            List<EventsItem> items = new List<EventsItem>();
 
             // Get events.
             IUserEventsCollectionPage events = await graphClient.Me.Events.Request().GetAsync();
@@ -27,10 +26,19 @@ namespace WebApp_OpenIDConnect_DotNet.Models
             {
                 foreach (Event current in events)
                 {
-                    items.Add(new ResultsItem
-                    {
-                        Display = current.Subject,
-                        Id = current.Id
+                    items.Add(new EventsItem
+                    {                        
+                        Id = current.Id,
+                        Body = current.Body,
+                        Attendees = current.Attendees.ToList(),
+                        Location = current.Location,
+                        EndTime = current.End,
+                        StartTime = current.Start,
+                        Subject = current.Subject,
+                        EventDate = DateTime.Parse(current.Start.DateTime.ToString()).Date,
+                        EventDay = DateTime.Parse(current.Start.DateTime.ToString()).DayOfWeek,
+                        EventStart = DateTime.Parse(current.Start.DateTime.ToString()).ToString("t"),
+                        EventEnd = DateTime.Parse(current.End.DateTime.ToString()).ToString("t"),
                     });
                 }
             }
@@ -66,106 +74,65 @@ namespace WebApp_OpenIDConnect_DotNet.Models
 
         // Create an event.
         // This snippet creates an hour-long event three days from now. 
-        public async Task<List<ResultsItem>> CreateEvent(GraphServiceClient graphClient)
+        public async Task<EventsItem> CreateEvent(GraphServiceClient graphClient, EventsItem eventsItem)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
-            string guid = Guid.NewGuid().ToString();
-
-            // List of attendees
-            List<Attendee> attendees = new List<Attendee>();
-            attendees.Add(new Attendee
-            {
-                EmailAddress = new EmailAddress
-                {
-                    Address = "mara@fabrikam.com"
-                },
-                Type = AttendeeType.Required
-            });
-
-            // Event body
-            ItemBody body = new ItemBody
-            {
-                Content = Resource.Event + guid,
-                ContentType = BodyType.Text
-            };
-
-            // Event start and end time
-            // Another example date format: `new DateTime(2017, 12, 1, 9, 30, 0).ToString("o")`
-            DateTimeTimeZone startTime = new DateTimeTimeZone
-            {
-                DateTime = DateTime.Now.AddDays(3).ToString("o"),
-                TimeZone = TimeZoneInfo.Local.Id
-            };
-            DateTimeTimeZone endTime = new DateTimeTimeZone
-            {
-                DateTime = DateTime.Now.AddDays(3).AddHours(1).ToString("o"),
-                TimeZone = TimeZoneInfo.Local.Id
-            };
-
-            // Event location
-            Location location = new Location
-            {
-                DisplayName = Resource.Location_DisplayName,
-            };
+            EventsItem items = new EventsItem();
 
             // Add the event.
             Event createdEvent = await graphClient.Me.Events.Request().AddAsync(new Event
             {
-                Subject = Resource.Event + guid.Substring(0, 8),
-                Location = location,
-                Attendees = attendees,
-                Body = body,
-                Start = startTime,
-                End = endTime
+                Subject = eventsItem.Subject,
+                Start = eventsItem.StartTime,
+                End = eventsItem.EndTime,
+                IsAllDay = false
             });
 
             if (createdEvent != null)
             {
-
-                // Get event properties.
-                items.Add(new ResultsItem
+                // Get updated event properties.
+                items = new EventsItem()
                 {
-                    Display = createdEvent.Subject,
                     Id = createdEvent.Id,
-                    Properties = new Dictionary<string, object>
-                    {
-                        { Resource.Prop_Description, createdEvent.BodyPreview },
-                        { Resource.Prop_Attendees, createdEvent.Attendees.Count() },
-                        { Resource.Prop_Start, createdEvent.Start.DateTime },
-                        { Resource.Prop_End, createdEvent.End.DateTime },
-                        { Resource.Prop_Id, createdEvent.Id }
-                    }
-                });
+                    Body = createdEvent.Body,
+                    Attendees = createdEvent.Attendees.ToList(),
+                    Location = createdEvent.Location,
+                    EndTime = createdEvent.End,
+                    StartTime = createdEvent.Start,
+                    Subject = createdEvent.Subject,
+                    EventDate = DateTime.Parse(createdEvent.Start.DateTime.ToString()).Date,
+                    EventDay = DateTime.Parse(createdEvent.Start.DateTime.ToString()).DayOfWeek,
+                    EventStart = DateTime.Parse(createdEvent.Start.DateTime.ToString()).ToString("t"),
+                    EventEnd = DateTime.Parse(createdEvent.End.DateTime.ToString()).ToString("t"),
+                };
             }
             return items;
         }
 
         // Get a specified event.
-        public async Task<List<ResultsItem>> GetEvent(GraphServiceClient graphClient, string id)
+        public async Task<EventsItem> GetEvent(GraphServiceClient graphClient, string id)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
+            EventsItem items = new EventsItem();
 
             // Get the event.
             Event retrievedEvent = await graphClient.Me.Events [id].Request().GetAsync();
                 
             if (retrievedEvent != null)
             {
-
-                // Get event properties.
-                items.Add(new ResultsItem
+                items = new EventsItem()
                 {
-                    Display = retrievedEvent.Subject,
                     Id = retrievedEvent.Id,
-                    Properties = new Dictionary<string, object>
-                    {
-                        { Resource.Prop_Description, retrievedEvent.BodyPreview },
-                        { Resource.Prop_Attendees, retrievedEvent.Attendees.Count() },
-                        { Resource.Prop_Start, retrievedEvent.Start.DateTime },
-                        { Resource.Prop_End, retrievedEvent.End.DateTime },
-                        { Resource.Prop_ResponseStatus, retrievedEvent.ResponseStatus.Response },
-                        { Resource.Prop_Id, retrievedEvent.Id }
-                    }
-                });
+                    Body = retrievedEvent.Body,
+                    Attendees = retrievedEvent.Attendees.ToList(),
+                    Location = retrievedEvent.Location,
+                    EndTime = retrievedEvent.End,
+                    StartTime = retrievedEvent.Start,
+                    Subject = retrievedEvent.Subject,
+                    EventDate = DateTime.Parse(retrievedEvent.Start.DateTime.ToString()).Date,
+                    EventDay = DateTime.Parse(retrievedEvent.Start.DateTime.ToString()).DayOfWeek,
+                    EventStart = DateTime.Parse(retrievedEvent.Start.DateTime.ToString()).ToString("t"),
+                    EventEnd = DateTime.Parse(retrievedEvent.End.DateTime.ToString()).ToString("t"),
+                };
+
             }
             return items;
         }
@@ -173,80 +140,53 @@ namespace WebApp_OpenIDConnect_DotNet.Models
 
         // Update an event. 
         // This snippets updates the event subject, time, and attendees.
-        public async Task<List<ResultsItem>> UpdateEvent(GraphServiceClient graphClient, string id, string name)
+        public async Task<EventsItem> UpdateEvent(GraphServiceClient graphClient, string id, EventsItem eventsItem)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
-
-            // New start and end time.
-            DateTimeTimeZone startTime = new DateTimeTimeZone
-            {
-                DateTime = new DateTime(2016, 12, 1, 13, 0, 0).ToString("o"),
-                TimeZone = TimeZoneInfo.Local.Id
-            };
-            DateTimeTimeZone endTime = new DateTimeTimeZone
-            {
-                DateTime = new DateTime(2016, 12, 1, 14, 0, 0).ToString("o"),
-                TimeZone = TimeZoneInfo.Local.Id
-            };
+            EventsItem items = new EventsItem();
 
             // Get the current list of attendees, and then add an attendee.
             Event originalEvent = await graphClient.Me.Events[id].Request().Select("attendees").GetAsync();
             List<Attendee> attendees = originalEvent.Attendees as List<Attendee>;
-            attendees.Add(new Attendee
-            {
-                EmailAddress = new EmailAddress
-                {
-                    Address = "aziz@fabrikam.com"
-                },
-                Type = AttendeeType.Required
-            });
-
+           
             // Update the event.
             Event updatedEvent = await graphClient.Me.Events[id].Request().UpdateAsync(new Event
             {
-                Subject = Resource.Updated + name,
+                Subject = eventsItem.Subject,
                 Attendees = attendees,
-                Start = startTime,
-                End = endTime
+                Start = eventsItem.StartTime,
+                End = eventsItem.EndTime,
+                IsAllDay = false
             });
 
             if (updatedEvent != null)
             {
-
                 // Get updated event properties.
-                items.Add(new ResultsItem
+                items = new EventsItem()
                 {
-                    Display = updatedEvent.Subject,
                     Id = updatedEvent.Id,
-                    Properties = new Dictionary<string, object>
-                    {
-                        { Resource.Prop_Attendees, updatedEvent.Attendees.Count() },
-                        { Resource.Prop_Start, updatedEvent.Start.DateTime },
-                        { Resource.Prop_End, updatedEvent.End.DateTime },
-                        { Resource.Prop_Id, updatedEvent.Id }
-                    }
-                });
+                    Body = updatedEvent.Body,
+                    Attendees = updatedEvent.Attendees.ToList(),
+                    Location = updatedEvent.Location,
+                    EndTime = updatedEvent.End,
+                    StartTime = updatedEvent.Start,
+                    Subject = updatedEvent.Subject,
+                    EventDate = DateTime.Parse(updatedEvent.Start.DateTime.ToString()).Date,
+                    EventDay = DateTime.Parse(updatedEvent.Start.DateTime.ToString()).DayOfWeek,
+                    EventStart = DateTime.Parse(updatedEvent.Start.DateTime.ToString()).ToString("t"),
+                    EventEnd = DateTime.Parse(updatedEvent.End.DateTime.ToString()).ToString("t"),
+                };
             }
             return items;
         }
 
         // Delete a specified event.
-        public async Task<List<ResultsItem>> DeleteEvent(GraphServiceClient graphClient, string id)
+        public async Task<EventsItem> DeleteEvent(GraphServiceClient graphClient, string id)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
+            EventsItem items = new EventsItem();
 
             // Delete the event.
             await graphClient.Me.Events[id].Request().DeleteAsync();
-
-            items.Add(new ResultsItem
-            {
-
-                // This operation doesn't return anything.
-                Properties = new Dictionary<string, object>
-                {
-                    { Resource.No_Return_Data, "" }
-                }
-            });
+          
             return items;
         }
 
