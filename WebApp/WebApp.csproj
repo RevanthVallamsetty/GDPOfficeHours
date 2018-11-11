@@ -164,6 +164,7 @@
     <Compile Include="Models\ExtensionsService.cs" />
     <Compile Include="Models\FilesService.cs" />
     <Compile Include="Models\GraphResources.cs" />
+    <Compile Include="Models\GraphService.cs" />
     <Compile Include="Models\GroupsService.cs" />
     <Compile Include="Models\MailService.cs" />
     <Compile Include="Models\ResultsViewModel.cs" />

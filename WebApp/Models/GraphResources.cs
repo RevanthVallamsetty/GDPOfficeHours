@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Microsoft_Graph_REST_ASPNET_Connect.Models
+namespace WebApp_OpenIDConnect_DotNet.Models
 {
     public class OfficeHoursUserInfo
     {
