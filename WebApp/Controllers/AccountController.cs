@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security;
+using WebApp_OpenIDConnect_DotNet.Models;
+using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
@@ -20,11 +22,25 @@ namespace WebApp.Controllers
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
             }
         }
-        
+
+        // Here we just clear the token cache, sign out the GraphServiceClient, and end the session with the web app.  
         public void SignOut()
         {
-            // Send an OpenID Connect sign-out request.
-            HttpContext.GetOwinContext().Authentication.SignOut(OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            if (Request.IsAuthenticated)
+            {
+                // Get the user's token cache and clear it.
+                string userObjectId = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                SessionTokenCache tokenCache = new SessionTokenCache(userObjectId, HttpContext);
+                HttpContext.GetOwinContext().Authentication.SignOut(OpenIdConnectAuthenticationDefaults.AuthenticationType, 
+                    CookieAuthenticationDefaults.AuthenticationType);
+            }
+
+
+            // Send an OpenID Connect sign-out request. 
+            HttpContext.GetOwinContext().Authentication.SignOut(
+              CookieAuthenticationDefaults.AuthenticationType);
+            Response.Redirect("/");
         }
     }
 }

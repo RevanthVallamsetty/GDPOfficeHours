@@ -4,14 +4,12 @@
     ViewBag.Title = "Student Appointment";
 }
 
-<h2>StudentAppointment</h2>
+<h2>Student Appointment</h2>
 
 
 @using (Html.BeginForm()) 
 {
-   
-    <div class="form-horizontal">
-        <h4>EventsItem</h4>
+    <div class="form-horizontal">        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
