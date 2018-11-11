@@ -167,7 +167,7 @@ namespace WebApp_OpenIDConnect_DotNet.Models
                     {
                         if (response.IsSuccessStatusCode)
                         {
-                            return Resource.Graph_SendMail_Success_Result;
+                            return "Success";
                         }
                         return response.ReasonPhrase;
                     }
@@ -217,7 +217,7 @@ namespace WebApp_OpenIDConnect_DotNet.Models
                 file.SharingLink = await CreateSharingLinkForFile(accessToken, file);
 
                 // Add the sharing link to the email body.
-                string bodyContent = string.Format(Resource.Graph_SendMail_Body_Content, file.SharingLink);
+                string bodyContent = string.Format("Mail Body", file.SharingLink);
 
                 // Build the email message.
                 OfficeHoursMessage message = new OfficeHoursMessage
