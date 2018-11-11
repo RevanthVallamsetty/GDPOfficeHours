@@ -84,6 +84,8 @@ namespace WebApp_OpenIDConnect_DotNet.Models
                 Subject = eventsItem.Subject,
                 Start = eventsItem.StartTime,
                 End = eventsItem.EndTime,
+                Attendees = eventsItem.Attendees,
+                Location = eventsItem.Location,
                 IsAllDay = false
             });
 
