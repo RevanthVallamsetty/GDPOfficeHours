@@ -32,18 +32,22 @@ namespace WebApp_OpenIDConnect_DotNet.Models
     public class EventsItem
     {
         public string Id { get; set; }
+        [Required]
         public string Subject { get; set; }
         public Location Location { get; set; }
         public List<Attendee> Attendees { get; set; }
         public ItemBody Body { get; set; }
         public DateTimeTimeZone StartTime { get; set; }
         public DateTimeTimeZone EndTime { get; set; }
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Event Date")]
         public DateTime EventDate { set; get; }
         public System.DayOfWeek EventDay { get; set; }
+        [Required]
         public string EventStart { get; set; }
+        [Required]
         public string EventEnd { get; set; }
     }
 
