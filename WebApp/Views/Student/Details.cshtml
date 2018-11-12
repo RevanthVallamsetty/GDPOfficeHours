@@ -1,0 +1,63 @@
+﻿@model WebApp_OpenIDConnect_DotNet.Models.EventsItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventStart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EventEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.DisplayName)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
