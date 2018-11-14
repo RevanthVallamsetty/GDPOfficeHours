@@ -167,7 +167,6 @@
     <Compile Include="Helpers\SampleAuthProvider.cs" />
     <Compile Include="Helpers\SDKHelper.cs" />
     <Compile Include="Models\EventsService.cs" />
-    <Compile Include="Models\ExtensionsService.cs" />
     <Compile Include="Models\Faculty.cs" />
     <Compile Include="Models\FilesService.cs" />
     <Compile Include="Models\GraphResources.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Models\GroupsService.cs" />
     <Compile Include="Models\MailService.cs" />
     <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="Models\messages.cs" />
     <Compile Include="Models\OfficeHours.cs" />
     <Compile Include="Models\OfficeHoursContext.cs" />
     <Compile Include="Models\ResultsViewModel.cs" />
@@ -276,6 +274,10 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Student\MessageView.cshtml" />
+    <Content Include="Views\Student\Delete.cshtml" />
+    <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
