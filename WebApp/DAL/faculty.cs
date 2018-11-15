@@ -18,6 +18,6 @@ namespace WebApp.Models
         public string Email { get; set; }
         public string phone_number { get; set; }
 
-        public virtual ICollection<OfficeHours> Office_Hours { get; set; }
+        public virtual ICollection<OfficeSchedule> Office_Hours { get; set; }
     }
 }

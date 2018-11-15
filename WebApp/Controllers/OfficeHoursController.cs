@@ -14,7 +14,7 @@ namespace WebApp.Controllers
         {
             OfficeHoursContext officeHoursContext = new OfficeHoursContext();
             List<Faculty> faculties = officeHoursContext.faculties.ToList();
-            List<OfficeHours> officeHours = faculties.First().Office_Hours.ToList();
+            List<OfficeSchedule> officeHours = faculties.First().Office_Hours.ToList();
             return View(officeHours);
         }
     }

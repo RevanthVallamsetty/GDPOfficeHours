@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class OfficeHours
+    public class OfficeSchedule
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
