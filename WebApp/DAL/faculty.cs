@@ -6,13 +6,18 @@ using System.Linq;
 using System.Web;
 
 namespace WebApp.Models
-{
-    [Table("Faculty")]
+{    
     public class Faculty
     {
-        [Key]
-        public string faculty_email { get; set; }
-        public string faculty_name { get; set; }
-        public List<OfficeHours> officeHours { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string first_Name { get; set; }
+        public string last_Name { get; set; }
+        public string Password { get; set; }
+        [Key, Column(TypeName = "varchar")]
+        public string Email { get; set; }
+        public string phone_number { get; set; }
+
+        public virtual ICollection<OfficeHours> Office_Hours { get; set; }
     }
 }
