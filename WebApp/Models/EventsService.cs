@@ -19,8 +19,18 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         {
             List<EventsItem> items = new List<EventsItem>();
 
+            //Get Calendar of office hours
+            // Define the required calendar.
+            List<QueryOption> options = new List<QueryOption>(); 
+            options.Add(new QueryOption("filter", "startswith(name, 'GDP Calendar')"));
+            var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
+
+
             // Get events.
-            IUserEventsCollectionPage events = await graphClient.Me.Events.Request().GetAsync();
+            //IUserEventsCollectionPage events = await graphClient.Me.Events.Request().GetAsync();
+
+            ICalendarEventsCollectionPage events = await graphClient.Me.Calendars[calander[0].Id]
+                .Events.Request().GetAsync();
 
             if (events?.Count > 0)
             {
@@ -45,6 +55,37 @@ namespace WebApp_OpenIDConnect_DotNet.Models
             return items;
         }
 
+        //To get events of student
+        public async Task<List<EventsItem>> GetMyAppointments(GraphServiceClient graphClient)
+        {
+            List<EventsItem> items = new List<EventsItem>();
+            
+            // Get events.
+            IUserEventsCollectionPage events = await graphClient.Me.Events.Request().GetAsync();
+
+            if (events?.Count > 0)
+            {
+                foreach (Event current in events)
+                {
+                    items.Add(new EventsItem
+                    {
+                        Id = current.Id,
+                        Body = current.Body,
+                        Attendees = current.Attendees.ToList(),
+                        Location = current.Location,
+                        EndTime = current.End,
+                        StartTime = current.Start,
+                        Subject = current.Subject,
+                        EventDate = DateTime.Parse(current.Start.DateTime.ToString()).Date,
+                        EventDay = DateTime.Parse(current.Start.DateTime.ToString()).DayOfWeek,
+                        EventStart = DateTime.Parse(current.Start.DateTime.ToString()).ToString("t"),
+                        EventEnd = DateTime.Parse(current.End.DateTime.ToString()).ToString("t"),
+                    });
+                }
+            }
+            return items;
+        }
+        
         // Get user's calendar view.
         // This snippets gets events for the next seven days.
         public async Task<List<ResultsItem>> GetMyCalendarView(GraphServiceClient graphClient)
@@ -73,10 +114,64 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         }
 
         // Create an event.
-        // This snippet creates an hour-long event three days from now. 
         public async Task<EventsItem> CreateEvent(GraphServiceClient graphClient, EventsItem eventsItem)
         {
             EventsItem items = new EventsItem();
+
+            //Get Calendar of office hours
+            // Define the required calendar.
+            List<QueryOption> options = new List<QueryOption>();
+            options.Add(new QueryOption("filter", "startswith(name, 'GDP Calendar')"));
+            var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
+
+            //Add event to specific calander
+            Event createdEvent = await graphClient.Me.Calendars[calander[0].Id].Events.Request().AddAsync(new Event
+            {
+                Subject = eventsItem.Subject,
+                Start = eventsItem.StartTime,
+                End = eventsItem.EndTime,
+                Attendees = eventsItem.Attendees,
+                Location = eventsItem.Location,
+                IsAllDay = false
+            });
+
+            // Add the event.
+            //Event createdEvent = await graphClient.Me.Events.Request().AddAsync(new Event
+            //{
+            //    Subject = eventsItem.Subject,
+            //    Start = eventsItem.StartTime,
+            //    End = eventsItem.EndTime,
+            //    Attendees = eventsItem.Attendees,
+            //    Location = eventsItem.Location,
+            //    IsAllDay = false
+            //});
+
+            if (createdEvent != null)
+            {
+                // Get updated event properties.
+                items = new EventsItem()
+                {
+                    Id = createdEvent.Id,
+                    Body = createdEvent.Body,
+                    Attendees = createdEvent.Attendees.ToList(),
+                    Location = createdEvent.Location,
+                    EndTime = createdEvent.End,
+                    StartTime = createdEvent.Start,
+                    Subject = createdEvent.Subject,
+                    EventDate = DateTime.Parse(createdEvent.Start.DateTime.ToString()).Date,
+                    EventDay = DateTime.Parse(createdEvent.Start.DateTime.ToString()).DayOfWeek,
+                    EventStart = DateTime.Parse(createdEvent.Start.DateTime.ToString()).ToString("t"),
+                    EventEnd = DateTime.Parse(createdEvent.End.DateTime.ToString()).ToString("t"),
+                };
+            }
+            return items;
+        }
+
+        //To create event for student
+        public async Task<EventsItem> CreateStudentEvent(GraphServiceClient graphClient, EventsItem eventsItem)
+        {
+            EventsItem items = new EventsItem();
+
 
             // Add the event.
             Event createdEvent = await graphClient.Me.Events.Request().AddAsync(new Event
@@ -116,7 +211,7 @@ namespace WebApp_OpenIDConnect_DotNet.Models
             EventsItem items = new EventsItem();
 
             // Get the event.
-            Event retrievedEvent = await graphClient.Me.Events [id].Request().GetAsync();
+            Event retrievedEvent = await graphClient.Me.Events[id].Request().GetAsync();
                 
             if (retrievedEvent != null)
             {

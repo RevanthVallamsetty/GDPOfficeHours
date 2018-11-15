@@ -82,7 +82,7 @@ namespace WebApp.Controllers
                 GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
 
                 // Create the event.
-                results = await eventsService.CreateEvent(graphClient, results);
+                results = await eventsService.CreateStudentEvent(graphClient, results);
             }
             catch (ServiceException se)
             {
@@ -271,7 +271,7 @@ namespace WebApp.Controllers
                 GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
 
                 // Get events.
-                results = await eventsService.GetMyEvents(graphClient);
+                results = await eventsService.GetMyAppointments(graphClient);
 
                 if(results != null && results.Any())
                 {
