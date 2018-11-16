@@ -14,7 +14,8 @@ namespace WebApp.Models
         public string student_Name { get; set; }
         public string message { get; set; }
         public DateTime? Date_Created { get; set; }
-        public int? is_archived { get; set; }
+        public bool is_archived { get; set; }
+        public string Email { get; set; }
 
         public virtual Faculty faculty { get; set; }
     }

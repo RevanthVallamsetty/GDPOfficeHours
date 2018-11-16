@@ -11,8 +11,10 @@ namespace WebApp.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string Subject { get; set; }
         public System.DateTime start_time { get; set; }
         public System.DateTime end_time { get; set; }
+        public string Email { get; set; }
 
         public virtual Faculty faculty { get; set; }
     }

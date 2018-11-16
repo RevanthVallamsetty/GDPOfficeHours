@@ -176,10 +176,6 @@
     <Compile Include="Helpers\IAuthProvider.cs" />
     <Compile Include="Helpers\SampleAuthProvider.cs" />
     <Compile Include="Helpers\SDKHelper.cs" />
-    <Compile Include="Migrations\201811150327099_changeOfficeTableName.cs" />
-    <Compile Include="Migrations\201811150327099_changeOfficeTableName.Designer.cs">
-      <DependentUpon>201811150327099_changeOfficeTableName.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EventsService.cs" />
     <Compile Include="DAL\Faculty.cs" />
@@ -290,6 +286,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Home\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -311,11 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811150327099_changeOfficeTableName.resx">
-      <DependentUpon>201811150327099_changeOfficeTableName.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

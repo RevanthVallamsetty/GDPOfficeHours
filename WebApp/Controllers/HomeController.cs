@@ -19,17 +19,16 @@ using System.Text;
 using Microsoft.Graph;
 using WebApp_OpenIDConnect_DotNet.Helpers;
 using Resources;
+using WebApp.Models;
+using System.Net;
 
 namespace WebApp.Controllers
 {
     
     public class HomeController : Controller
     {
-        public static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-        private static string appKey = ConfigurationManager.AppSettings["ida:ClientSecret"];
-        private static string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+        private OfficeHoursContext db = new OfficeHoursContext();
 
-        MailService mailService = new MailService();
         public ActionResult Index()
         {
             return View();
@@ -50,6 +49,42 @@ namespace WebApp.Controllers
             // The subject or nameidentifier claim can be used to uniquely identify the user
             ViewBag.Subject = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
             return View();
+        }
+
+        public ActionResult Home()
+        {
+            if(Session["facultyMail"] != null)
+            {
+                var id = db.faculties.Find(Session["facultyMail"].ToString()).Id;
+                return RedirectToAction("Select", new
+                {
+                    id = id,
+                });
+            }
+            else
+            {
+                var faculty = db.faculties.OrderBy(q => q.first_Name).ToList();
+                return View(faculty.ToList());
+            }
+        }
+
+        public ActionResult Select(int? id)
+        {
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var facultyMail = (from f in db.faculties where f.Id == id select f.Email).FirstOrDefault().ToString();
+            if (facultyMail == null)
+            {
+                return HttpNotFound();
+            }
+            Session["facultyMail"] = facultyMail;
+            IQueryable<OfficeSchedule> officeSchedules = db.officeSchedule
+                .Where(o => o.faculty.Email.Equals(facultyMail.ToString()))
+                .OrderBy(d => d.start_time);
+            var sql = officeSchedules.ToString();
+            return View(officeSchedules.ToList());
         }
 
         

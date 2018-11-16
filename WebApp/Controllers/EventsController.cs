@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Net;
 using System.Globalization;
+using WebApp.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace WebApp.Controllers
 {
@@ -15,6 +17,7 @@ namespace WebApp.Controllers
     public class EventsController : Controller
     {
         EventsService eventsService = new EventsService();
+        private OfficeHoursContext db = new OfficeHoursContext();
        
         // Get events.
         public async Task<ActionResult> Index()
@@ -75,6 +78,9 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Create([Bind(Include = "Subject,EventDate,EventStart,EventEnd")] EventsItem eventsItem)
         {
             EventsItem results = new EventsItem();
+            // Initialize the GraphServiceClient.
+            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+
             try
             {
                 var subject = Request.Form["Subject"];
@@ -88,6 +94,29 @@ namespace WebApp.Controllers
                 var endTimespan = DateTime.ParseExact(eventEndTime,
                                     "hh:mm tt", CultureInfo.InvariantCulture);
                 var s = eventsItem;
+
+                OfficeSchedule officeSchedule = new OfficeSchedule
+                {
+                    end_time = new DateTime(eventdatetime.Year, eventdatetime.Month, eventdatetime.Day, endTimespan.Hour,
+                                                endTimespan.Minute, endTimespan.Second),
+                    start_time = new DateTime(eventdatetime.Year, eventdatetime.Month, eventdatetime.Day, startTimespan.Hour,
+                                                startTimespan.Minute, startTimespan.Second),
+                    Subject = subject,
+                    Email = await eventsService.GetMyEmailAddress(graphClient),
+                };
+
+                //var mail = await eventsService.GetMyEmailAddress(graphClient);
+
+                try
+                {
+                    db.officeSchedule.Add(officeSchedule);
+                    db.SaveChanges();
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
 
                 results = new EventsItem()
                 {
@@ -105,9 +134,6 @@ namespace WebApp.Controllers
                         TimeZone = TimeZoneInfo.Local.Id
                     },
                 };
-
-                // Initialize the GraphServiceClient.
-                GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
 
                 // Create the event.
                 results = await eventsService.CreateEvent(graphClient, results);

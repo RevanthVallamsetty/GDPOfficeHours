@@ -49,7 +49,7 @@ namespace WebApp.Controllers
                 {
                     EmailAddress = new EmailAddress
                     {
-                        Address = "s530458@nwmissouri.edu"
+                        Address = Session["facultyMail"].ToString()
                     },
                     Type = AttendeeType.Required
                 });

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebApp.Models.Faculty>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.first_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.last_Name)
+        </th>        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.first_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.last_Name)
+        </td>        
+        <td>
+            @Html.ActionLink("Select", "Select", new { id=item.Id })
+        </td>
+    </tr>
+}
+</table>
