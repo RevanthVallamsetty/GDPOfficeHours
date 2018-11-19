@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using DemoWebCam.EntityStore;
-using DemoWebCam.Models;
+using System.Web.Mvc;
+using System.Web.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +13,26 @@ namespace DemoWebCam.Controllers
 {
     public class CameraController : Controller
     {
-        private readonly DatabaseContext _context;
-        private readonly IHostingEnvironment _environment;
-        public CameraController(IHostingEnvironment hostingEnvironment, DatabaseContext context)
+        private readonly HostingEnvironment _environment;
+
+        public CameraController(HostingEnvironment hostingEnvironment)
         {
             _environment = hostingEnvironment;
-            _context = context;
         }
 
         [HttpGet]
-        public IActionResult Capture()
+        public ActionResult Capture()
         {
             return View();
         }
 
 
         [HttpPost]
-        public IActionResult Capture(string name)
+        public ActionResult Capture(string name)
         {
             try
             {
-                var files = HttpContext.Request.Form.Files;
+                var files = HttpContext.Request.Form.;
                 if (files != null)
                 {
                     foreach (var file in files)
@@ -61,7 +60,7 @@ namespace DemoWebCam.Controllers
                             if (imageBytes != null)
                             {
                                 // Storing Image in Folder
-                                StoreInDatabase(imageBytes);
+                                //StoreInDatabase(imageBytes);
                             }
 
                         }
@@ -92,36 +91,6 @@ namespace DemoWebCam.Controllers
                 file.CopyTo(fs);
                 fs.Flush();
             }
-        }
-
-        /// <summary>
-        /// Saving captured image into database.
-        /// </summary>
-        /// <param name="imageBytes"></param>
-        private void StoreInDatabase(byte[] imageBytes)
-        {
-            try
-            {
-                if (imageBytes != null)
-                {
-                    string base64String = Convert.ToBase64String(imageBytes, 0, imageBytes.Length);
-                    string imageUrl = string.Concat("data:image/jpg;base64,", base64String);
-
-                    ImageStore imageStore = new ImageStore()
-                    {
-                        CreateDate = DateTime.Now,
-                        ImageBase64String = imageUrl,
-                        ImageId = 0
-                    };
-
-                    _context.ImageStore.Add(imageStore);
-                    _context.SaveChanges();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        }        
     }
 }
