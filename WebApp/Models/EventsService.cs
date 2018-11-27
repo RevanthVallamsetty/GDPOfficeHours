@@ -18,14 +18,14 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         private OfficeHoursContext db = new OfficeHoursContext();
 
         // Get the current user's email address from their profile.
-        public async Task<string> GetMyEmailAddress(GraphServiceClient graphClient)
+        public async Task<User> GetMyDetails(GraphServiceClient graphClient)
         {
 
             // Get the current user. 
             // This sample only needs the user's email address, so select the mail and userPrincipalName properties.
             // If the mail property isn't defined, userPrincipalName should map to the email for all account types. 
-            User me = await graphClient.Me.Request().Select("mail,userPrincipalName").GetAsync();
-            return me.Mail ?? me.UserPrincipalName;
+            User me = await graphClient.Me.Request().GetAsync();
+            return me;
         }
 
         // Get events in all the current user's mail folders.

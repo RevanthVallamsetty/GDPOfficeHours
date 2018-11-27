@@ -96,9 +96,9 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         }
 
         // Create a text file in the current user's root directory.
-        public async Task<List<ResultsItem>> CreateFile(GraphServiceClient graphClient, byte[] byteArray)
+        public async Task<ResultsItem> CreateFile(GraphServiceClient graphClient, byte[] byteArray)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
+            ResultsItem resultsItem = new ResultsItem();
             
             // Create the file to upload. Read the file content string into a stream that gets passed as the file content.
             string guid = Guid.NewGuid().ToString();
@@ -113,22 +113,11 @@ namespace WebApp_OpenIDConnect_DotNet.Models
 
                 if (file != null)
                 {
-
-                    // Get file properties.
-                    items.Add(new ResultsItem
-                    {
-                        Display = file.Name,
-                        Id = file.Id,
-                        Properties = new Dictionary<string, object>
-                        {
-                            { Resource.Prop_Created, file.CreatedDateTime.Value.ToLocalTime() },
-                            { Resource.Prop_Url, file.WebUrl },
-                            { Resource.Prop_Id, file.Id }
-                        }
-                    });
+                    var fileLink = await GetSharingLink(graphClient, file.Id);
+                    return fileLink;
                 }
             }
-            return items;
+            return resultsItem;
         }
 
         // Create a folder in the current user's root directory. 
@@ -408,22 +397,21 @@ namespace WebApp_OpenIDConnect_DotNet.Models
 
         // Get a sharing link.
         // This snippet gets a link that has `view` permissions to the file.
-        public async Task<List<ResultsItem>> GetSharingLink(GraphServiceClient graphClient, string id)
+        public async Task<ResultsItem> GetSharingLink(GraphServiceClient graphClient, string id)
         {
-            List<ResultsItem> items = new List<ResultsItem>();
+            ResultsItem items = new ResultsItem();
 
             // Get a sharing link for the file.
             Permission permission = await graphClient.Me.Drive.Items[id].CreateLink("view").Request().PostAsync();
 
             if (permission != null)
             {
-
                 // Get permission properties.
-                items.Add(new ResultsItem
+                items = new ResultsItem()
                 {
                     Display = permission.Link.WebUrl,
                     Id = permission.Id
-                });
+                };
             }
             return items;
         }

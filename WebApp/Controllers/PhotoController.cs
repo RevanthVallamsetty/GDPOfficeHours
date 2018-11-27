@@ -14,12 +14,12 @@ using System.IO;
 
 namespace WebApp.Controllers
 {
-    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
+    [Authorize]
     public class PhotoController : Controller
     {
         FilesService filesService = new FilesService();
-        // Initialize the GraphServiceClient.
-        GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+        EventsService eventsService = new EventsService();
+        private OfficeHoursContext db = new OfficeHoursContext();
 
         [HttpGet]
         public ActionResult Index()
@@ -29,13 +29,48 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string Imagename)
+        public async Task<ActionResult> Index(string imageName)
         {
-            string sss = Session["val"].ToString();
+            byte[] byteArray;
+            if (Session["dump"] == null)
+            {
+                return RedirectToAction("Index", "Error", new { message = string.Format("Try capturing the image again") });
+            }
+            byteArray = String_To_Bytes2(Session["dump"].ToString());
+            // Initialize the GraphServiceClient.
+            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+            var userDetails = await eventsService.GetMyDetails(graphClient);
+            var result = await filesService.CreateFile(graphClient, byteArray);
+            try
+            {
+                CaptureNote captureNote = new CaptureNote()
+                {
+                    CapturedDate = DateTime.Now,
+                    Email = Session["facultyMail"] != null ? Session["facultyMail"].ToString() : "",
+                    NoteLink = result.Display,
+                    StudentName = userDetails.DisplayName,                    
+                };
 
-            ViewBag.pic = "http://localhost:4279/WebImages/" + Session["val"].ToString();
+                try
+                {
+                    db.captureNotes.Add(captureNote);
+                    db.SaveChanges();
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            catch (ServiceException se)
+            {
+                if (se.Error.Message == Resource.Error_AuthChallengeNeeded) return new EmptyResult();
 
-            return View();
+                // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
+                return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
+            }
+
+            return RedirectToAction("Index", "Student");
         }
 
         [HttpGet]
@@ -77,6 +112,8 @@ namespace WebApp.Controllers
 
                 System.IO.File.WriteAllBytes(path, String_To_Bytes2(dump));
 
+                Session["dump"] = dump;
+
                 ViewData["path"] = date + "test.jpg";
 
                 Session["val"] = date + "test.jpg";
@@ -96,6 +133,6 @@ namespace WebApp.Controllers
             }
 
             return bytes;
-        }
+        }        
     }
 }

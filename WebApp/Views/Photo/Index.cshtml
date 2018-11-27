@@ -59,12 +59,12 @@
     function Uploadsubmit() {
         debugger;
         var src = $('img').attr('src');
-        src_array = src.split('/');
-        src = src_array[4];
+        //src_array = src.split('/');
+        //src = src_array[4];
         if (src != "") {
             $.ajax({
                 type: 'POST',
-                url: ("@Url.Content("~/Photo/Index")/"),
+                url: ("@Url.Action("Index", "Photo")/"),
                dataType: 'json',
                data: { Imagename: src },
                success: function () { }

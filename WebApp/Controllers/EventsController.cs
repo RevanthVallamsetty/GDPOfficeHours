@@ -80,6 +80,7 @@ namespace WebApp.Controllers
             EventsItem results = new EventsItem();
             // Initialize the GraphServiceClient.
             GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+            var userDetails = await eventsService.GetMyDetails(graphClient);
 
             try
             {
@@ -101,8 +102,8 @@ namespace WebApp.Controllers
                                                 endTimespan.Minute, endTimespan.Second),
                     start_time = new DateTime(eventdatetime.Year, eventdatetime.Month, eventdatetime.Day, startTimespan.Hour,
                                                 startTimespan.Minute, startTimespan.Second),
-                    Subject = subject,
-                    Email = await eventsService.GetMyEmailAddress(graphClient),
+                    Subject = subject,                    
+                    Email = userDetails.Mail ?? userDetails.UserPrincipalName,
                 };
 
                 //var mail = await eventsService.GetMyEmailAddress(graphClient);
