@@ -96,14 +96,14 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         }
 
         // Create a text file in the current user's root directory.
-        public async Task<List<ResultsItem>> CreateFile(GraphServiceClient graphClient)
+        public async Task<List<ResultsItem>> CreateFile(GraphServiceClient graphClient, byte[] byteArray)
         {
             List<ResultsItem> items = new List<ResultsItem>();
             
             // Create the file to upload. Read the file content string into a stream that gets passed as the file content.
             string guid = Guid.NewGuid().ToString();
-            string fileName = Resource.File + guid.Substring(0, 8) + ".txt";
-            byte[] byteArray = Encoding.ASCII.GetBytes(Resource.FileContent_New);
+            string fileName = Resource.File + guid.Substring(0, 8) + ".jpg";
+            //byte[] byteArray = Encoding.ASCII.GetBytes(Resource.FileContent_New);
 
             using (MemoryStream fileContentStream = new MemoryStream(byteArray))
             {
