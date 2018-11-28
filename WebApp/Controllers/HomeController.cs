@@ -28,10 +28,43 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private OfficeHoursContext db = new OfficeHoursContext();
+        EventsService eventsService = new EventsService();
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+                var userDetails = await eventsService.GetMyDetails(graphClient);
+
+                var hasFaculty = db.faculties.Select(q => q.Email).ToList().Contains(userDetails.Mail ?? userDetails.UserPrincipalName);
+
+                if (hasFaculty)
+                {
+                    Session["Role"] = "Faculty";
+                    return View();
+                }
+                else
+                {
+                    Session["Role"] = "Student";
+                    return RedirectToAction("Home");
+                }
+            }
+            return RedirectToAction("Home");
+        }
+
+        public ActionResult SetRole(string role)
+        {
+            if(role != null && role.Equals("Faculty"))
+            {
+                Session["Role"] = role;
+            }
+            else if(role != null && role.Equals("Faculty"))
+            {
+                Session["Role"] = role;
+            }
+
+            return RedirectToAction("Home");
         }
 
         [Authorize]
@@ -58,7 +91,7 @@ namespace WebApp.Controllers
                 var id = db.faculties.Find(Session["facultyMail"].ToString()).Id;
                 return RedirectToAction("Select", new
                 {
-                    id = id,
+                    id,
                 });
             }
             else

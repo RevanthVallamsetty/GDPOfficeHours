@@ -279,7 +279,7 @@ namespace WebApp.Controllers
                     {
                         foreach(Attendee attendee in item.Attendees)
                         {
-                            if (attendee.EmailAddress.Address.Equals("S530458@nwmissouri.edu"))
+                            if (attendee.EmailAddress.Address.Equals(Session["facultyMail"].ToString()))
                                 filteredResults.Add(item);
                         }
                     }

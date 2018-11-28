@@ -9,14 +9,14 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Initial setup</h2>
+        <h2>@Html.ActionLink("Faculty View", "SetRole", new { role = "Faculty" })</h2>
         <p>
             Faculty needs to login first to give permissions to this app to get access to his/her outlook calender
         </p>
         <p>Please click the sign-In with microsoft button on the top right to login</p>
     </div>
     <div class="col-md-4">
-        <h2>Ensure the kiosk is secured</h2>
+        <h2>@Html.ActionLink("Student View", "SetRole", new { role = "Student" })</h2>
         <p>Please ensure that the URL is not editable and a new tab should not be allowed to created</p>
     </div>
     
