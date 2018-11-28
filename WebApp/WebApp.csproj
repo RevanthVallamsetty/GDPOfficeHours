@@ -332,7 +332,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Capture\Index.cshtml" />
-    <Content Include="Views\Capture\CaptureNotePartial.cshtml" />
+    <Content Include="Views\Capture\Details.cshtml" />
+    <Content Include="Views\Capture\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

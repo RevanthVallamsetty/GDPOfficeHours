@@ -12,13 +12,8 @@ namespace WebApp.Controllers
     {
         private OfficeHoursContext db = new OfficeHoursContext();
         // GET: Capture
+        
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Index([Bind(Include = "CaptureDate")] CaptureNote note)
         {
             var facultyMail = Session["facultyMail"].ToString();
             List<CaptureNoteModel> captureNoteModels = new List<CaptureNoteModel>();
@@ -28,19 +23,40 @@ namespace WebApp.Controllers
                 .OrderBy(d => d.StudentName);
 
 
-            foreach(var cn in captureNotes)
+            foreach (var cn in captureNotes)
             {
-                if (cn.CapturedDate.Equals(note.CapturedDate))
+                captureNoteModels.Add(new CaptureNoteModel()
                 {
-                    captureNoteModels.Add(new CaptureNoteModel() {
-                        CapturedDate = cn.CapturedDate,
-                        Email = cn.Email,
-                        Id = cn.Id,
-                        NoteLink = cn.NoteLink,
-                        StudentName = cn.StudentName
-                    });
-                }
+                    CapturedDate = cn.CapturedDate,
+                    Email = cn.Email,
+                    Id = cn.Id,
+                    NoteLink = cn.NoteLink,
+                    StudentName = cn.StudentName
+                });
             }
+
+            return View(captureNoteModels);
+        }
+
+        // Get a specified event.
+        public ActionResult Details(int? id)
+        {
+            var facultyMail = Session["facultyMail"].ToString();
+            CaptureNoteModel captureNoteModels = new CaptureNoteModel();
+
+            var cn = db.captureNotes
+                .Where(o => o.Id == id)
+                .OrderBy(d => d.StudentName).FirstOrDefault();
+
+            captureNoteModels = new CaptureNoteModel()
+            {
+                CapturedDate = cn.CapturedDate,
+                Email = cn.Email,
+                Id = cn.Id,
+                NoteLink = cn.NoteLink,
+                StudentName = cn.StudentName
+            };
+
 
             return View(captureNoteModels);
         }
