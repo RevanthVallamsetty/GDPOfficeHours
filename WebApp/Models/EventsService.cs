@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Models;
 
-namespace WebApp_OpenIDConnect_DotNet.Models
+namespace WebApp.Models
 {
     public class EventsService
     {

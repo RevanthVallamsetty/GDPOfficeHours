@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 
-namespace WebApp_OpenIDConnect_DotNet.Models
+namespace WebApp.Models
 {
     public class FilesService
     {

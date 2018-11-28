@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApp.Models.CaptureNoteModel>
+
+<table class="table">
+    @if (Model != null && Model.Any())
+    {        
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{                 
+
+                        var i = 0;
+                        if (i % 3 == 0)
+                        {
+                            Html.Raw("</tr><tr>"); //End old row and start new one
+                        }
+                        i++;
+                    }
+                    @Url.Content(item.NoteLink);
+                </td>
+            </tr>
+        }
+    }
+
+</table>

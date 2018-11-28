@@ -19,6 +19,6 @@ namespace WebApp.Models
         public string phone_number { get; set; }
 
         public virtual ICollection<OfficeSchedule> Office_Hours { get; set; }
-        public virtual ICollection<Message> messages { get; set; }
+        public virtual ICollection<StudentMessage> messages { get; set; }
     }
 }

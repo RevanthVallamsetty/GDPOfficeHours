@@ -14,7 +14,7 @@ using System.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using System.Web;
 using WebApp.Utils;
-using WebApp_OpenIDConnect_DotNet.Models;
+using WebApp.Models;
 
 namespace WebApp
 {

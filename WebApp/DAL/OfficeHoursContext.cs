@@ -15,7 +15,7 @@ namespace WebApp.Models
 
         public DbSet<OfficeSchedule> officeSchedule { get; set; }
         public DbSet<Faculty> faculties { get; set; }
-        public DbSet<Message> messages { get; set; }
+        public DbSet<StudentMessage> messages { get; set; }
         public DbSet<CaptureNote> captureNotes { get; set; }
     }
 }

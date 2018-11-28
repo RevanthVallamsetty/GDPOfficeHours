@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
-namespace WebApp_OpenIDConnect_DotNet.Models
+namespace WebApp.Models
 {
     public class SessionTokenCache
     {

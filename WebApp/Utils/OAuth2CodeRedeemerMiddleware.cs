@@ -16,7 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebApp_OpenIDConnect_DotNet.Models;
+using WebApp.Models;
 
 namespace WebApp.Utils
 {

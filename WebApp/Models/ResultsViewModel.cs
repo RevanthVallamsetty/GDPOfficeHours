@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace WebApp_OpenIDConnect_DotNet.Models
+namespace WebApp.Models
 {
 
     // An entity, such as a user, group, or message.
@@ -49,6 +49,19 @@ namespace WebApp_OpenIDConnect_DotNet.Models
         public string EventStart { get; set; }
         [Required]
         public string EventEnd { get; set; }
+    }
+
+    public class CaptureNoteModel
+    {
+        public int Id { get; set; }
+        public string StudentName { get; set; }
+        public string NoteLink { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Captured Date")]
+        public DateTime CapturedDate { get; set; }
+        public string Email { get; set; }
     }
 
     // View model to display a collection of one or more entities returned from the Microsoft Graph. 

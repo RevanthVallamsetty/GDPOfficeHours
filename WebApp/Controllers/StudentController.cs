@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graph;
-using WebApp_OpenIDConnect_DotNet.Helpers;
-using WebApp_OpenIDConnect_DotNet.Models;
+using WebApp.Helpers;
+using WebApp.Models;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -293,7 +293,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
 
             }
-            return View(filteredResults);
+            return View("Index",filteredResults);
         }
 
         // Get user's calendar view.

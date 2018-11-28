@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CaptureController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -207,6 +208,10 @@
     <Compile Include="Migrations\201811271848164_AddcaptureNotemodel.cs" />
     <Compile Include="Migrations\201811271848164_AddcaptureNotemodel.Designer.cs">
       <DependentUpon>201811271848164_AddcaptureNotemodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811282128588_NameChangeStudentMessage.cs" />
+    <Compile Include="Migrations\201811282128588_NameChangeStudentMessage.Designer.cs">
+      <DependentUpon>201811282128588_NameChangeStudentMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EventsService.cs" />
@@ -326,6 +331,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\Capture\Index.cshtml" />
+    <Content Include="Views\Capture\CaptureNotePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
@@ -339,15 +346,16 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\OfficeHours\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201811271848164_AddcaptureNotemodel.resx">
       <DependentUpon>201811271848164_AddcaptureNotemodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811282128588_NameChangeStudentMessage.resx">
+      <DependentUpon>201811282128588_NameChangeStudentMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

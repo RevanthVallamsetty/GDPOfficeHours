@@ -5,7 +5,7 @@
 
 using System.Threading.Tasks;
 
-namespace WebApp_OpenIDConnect_DotNet.Helpers
+namespace WebApp.Helpers
 {
     public interface IAuthProvider
     {

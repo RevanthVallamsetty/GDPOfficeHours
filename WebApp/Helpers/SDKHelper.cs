@@ -7,7 +7,7 @@ using Microsoft.Graph;
 using System.Net.Http.Headers;
 using System;
 
-namespace WebApp_OpenIDConnect_DotNet.Helpers
+namespace WebApp.Helpers
 {
     public class SDKHelper
     {

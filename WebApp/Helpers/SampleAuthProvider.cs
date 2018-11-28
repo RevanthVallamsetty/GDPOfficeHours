@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
-using WebApp_OpenIDConnect_DotNet.Models;
+using WebApp.Models;
 using System.Configuration;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
@@ -16,7 +16,7 @@ using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Graph;
 using Resources;
 
-namespace WebApp_OpenIDConnect_DotNet.Helpers
+namespace WebApp.Helpers
 {
     public sealed class SampleAuthProvider : IAuthProvider
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graph;
-using WebApp_OpenIDConnect_DotNet.Helpers;
-using WebApp_OpenIDConnect_DotNet.Models;
+using WebApp.Helpers;
+using WebApp.Models;
 using Resources;
 using System;
 using System.Collections.Generic;

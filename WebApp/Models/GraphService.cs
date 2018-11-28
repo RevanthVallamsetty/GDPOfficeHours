@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Resources;
 using System.IO;
 
-namespace WebApp_OpenIDConnect_DotNet.Models
+namespace WebApp.Models
 {            
     
     // This sample shows how to:
