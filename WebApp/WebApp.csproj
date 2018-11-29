@@ -191,13 +191,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CaptureController.cs" />
-    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OfficeHoursController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentMessagesController.cs" />
     <Compile Include="DAL\CaptureNote.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -333,9 +333,11 @@
     <Content Include="Views\Capture\Index.cshtml" />
     <Content Include="Views\Capture\Details.cshtml" />
     <Content Include="Views\Capture\Delete.cshtml" />
-    <Content Include="Views\Message\getMyMessages.cshtml" />
-    <Content Include="Views\Student\CreateMessage.cshtml" />
-    <Content Include="Views\Student\MessageView.cshtml" />
+    <Content Include="Views\StudentMessages\Create.cshtml" />
+    <Content Include="Views\StudentMessages\Delete.cshtml" />
+    <Content Include="Views\StudentMessages\Details.cshtml" />
+    <Content Include="Views\StudentMessages\Edit.cshtml" />
+    <Content Include="Views\StudentMessages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
