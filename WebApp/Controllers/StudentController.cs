@@ -342,17 +342,21 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMessage([Bind(Include = "student_id,student_Name,message")] Models.StudentMessage message)
+        public async Task<ActionResult> CreateMessage([Bind(Include = "student_id,student_Name,message")] Models.StudentMessage message)
         {
+            // Initialize the GraphServiceClient.
+            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+            var userDetails = await eventsService.GetMyDetails(graphClient);
+
             StudentMessage msg = new StudentMessage();
-            msg.student_id = Request.Form["student_id"];
-            msg.student_Name = Request.Form["student_Name"];
+            msg.student_id = userDetails.Mail??userDetails.UserPrincipalName;
+            msg.student_Name = userDetails.DisplayName;
             msg.message = Request.Form["message"];
             msg.Date_Created = DateTime.Now;
             msg.is_archived = false;
             OfficeHoursContext officeHoursContext = new OfficeHoursContext();
             List<Faculty> faculties = officeHoursContext.faculties.ToList();
-            msg.Email = faculties.First().Email;
+            msg.Email = Session["facultyMail"].ToString();
             try
             {
                 officeHoursContext.messages.Add(msg);
@@ -362,11 +366,9 @@ namespace WebApp.Controllers
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.)
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-            }
+            }            
 
-            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
-
-            return RedirectToAction("CreateMessage", "Student");
+            return RedirectToAction("MessageView", "Student");
 
         }
 
