@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Globalization;
 using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace WebApp.Controllers
 {
@@ -317,5 +318,57 @@ namespace WebApp.Controllers
             }
             return View("Events", results);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> MessageView()
+        {
+            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+            User fac = await eventsService.GetMyDetails(graphClient);
+            OfficeHoursContext officeHoursContext = new OfficeHoursContext();
+            List<StudentMessage> studentMessages = officeHoursContext.messages.ToList();
+            List<WebApp.Models.StudentMessage> messages = new List<StudentMessage>();
+            foreach(var st in studentMessages)
+            {
+                if (st.student_id.Equals(fac.Mail))
+                    messages.Add(st);
+            }
+            return View(messages);            
+        }
+
+        [HttpGet]
+        public ActionResult CreateMessage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateMessage([Bind(Include = "student_id,student_Name,message")] Models.StudentMessage message)
+        {
+            StudentMessage msg = new StudentMessage();
+            msg.student_id = Request.Form["student_id"];
+            msg.student_Name = Request.Form["student_Name"];
+            msg.message = Request.Form["message"];
+            msg.Date_Created = DateTime.Now;
+            msg.is_archived = false;
+            OfficeHoursContext officeHoursContext = new OfficeHoursContext();
+            List<Faculty> faculties = officeHoursContext.faculties.ToList();
+            msg.Email = faculties.First().Email;
+            try
+            {
+                officeHoursContext.messages.Add(msg);
+                officeHoursContext.SaveChanges();
+            }
+            catch (RetryLimitExceededException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.)
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+
+            GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+
+            return RedirectToAction("CreateMessage", "Student");
+
+        }
+
     }
 }
