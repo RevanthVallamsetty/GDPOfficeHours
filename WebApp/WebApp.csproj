@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CaptureController.cs" />
+    <Compile Include="Controllers\FacultyMessagesController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -338,6 +339,9 @@
     <Content Include="Views\StudentMessages\Details.cshtml" />
     <Content Include="Views\StudentMessages\Edit.cshtml" />
     <Content Include="Views\StudentMessages\Index.cshtml" />
+    <Content Include="Views\FacultyMessages\Delete.cshtml" />
+    <Content Include="Views\FacultyMessages\Details.cshtml" />
+    <Content Include="Views\FacultyMessages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

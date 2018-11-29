@@ -1,0 +1,48 @@
+﻿@model WebApp.Models.StudentMessage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentMessage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Student Mail
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.student_id)
+        </dd>
+
+        <dt>
+            Student Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.student_Name)
+        </dd>
+
+        <dt>
+            Created Date and Time
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Created)
+        </dd>
+
+        <dt>
+            Message
+        </dt>
+
+        <dd>
+            @Html.DisplayTextFor(model => model.message)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

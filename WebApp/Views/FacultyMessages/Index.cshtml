@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebApp.Models.StudentMessage>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Student Id
+        </th>
+        <th>
+            Student Name
+        </th>
+        <th>
+            Date and Time
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (!item.is_archived)
+        {
+            <tr style="font-weight:bold">
+                <td>
+                    @Html.DisplayFor(modelItem => item.student_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.student_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Created)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.student_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.student_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Created)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
