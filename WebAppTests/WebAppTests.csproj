@@ -74,6 +74,8 @@
     <Compile Include="Controllers\PhotoControllerTests.cs" />
     <Compile Include="Controllers\StudentControllerTests.cs" />
     <Compile Include="Controllers\StudentMessagesControllerTests.cs" />
+    <Compile Include="Models\EventsServiceTests.cs" />
+    <Compile Include="Models\FilesServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
