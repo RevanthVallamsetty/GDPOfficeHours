@@ -28,8 +28,8 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Index(string imageName)
+        
+        public async Task<ActionResult> SavePhoto()
         {
             byte[] byteArray;
             if (Session["dump"] == null)
