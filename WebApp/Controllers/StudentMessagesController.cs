@@ -24,17 +24,20 @@ namespace WebApp.Controllers
             // Initialize the GraphServiceClient.
             GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
             var userDetails = await eventsService.GetMyDetails(graphClient);
-
-            List<StudentMessage> studentMessages = new List<StudentMessage>();
-            var messages = db.messages.ToList();
-            foreach (var msg in messages)
+            if (Session["facultyMail"] != null)
             {
-                if (msg.student_id.Equals(userDetails.Mail))
+                List<StudentMessage> studentMessages = new List<StudentMessage>();
+                var messages = db.messages.ToList();
+                foreach (var msg in messages)
                 {
-                    studentMessages.Add(msg);
+                    if (msg.student_id.Equals(userDetails.Mail))
+                    {
+                        studentMessages.Add(msg);
+                    }
                 }
+                return View(studentMessages);
             }
-            return View(studentMessages);
+            return RedirectToAction("Home", "Home");
         }
 
         // GET: StudentMessages/Details/5
