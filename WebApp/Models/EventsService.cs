@@ -37,7 +37,7 @@ namespace WebApp.Models
             //Get Calendar of office hours
             // Define the required calendar.
             List<QueryOption> options = new List<QueryOption>(); 
-            options.Add(new QueryOption("filter", "startswith(name, 'GDP Calendar')"));
+            options.Add(new QueryOption("filter", "startswith(name, 'officehours')"));
             var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
 
 
@@ -138,7 +138,7 @@ namespace WebApp.Models
             //Get Calendar of office hours
             // Define the required calendar.
             List<QueryOption> options = new List<QueryOption>();
-            options.Add(new QueryOption("filter", "startswith(name, 'GDP Calendar')"));
+            options.Add(new QueryOption("filter", "startswith(name, 'officehours')"));
             var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
 
             // Add the event.

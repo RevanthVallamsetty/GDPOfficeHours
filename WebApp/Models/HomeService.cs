@@ -19,21 +19,44 @@ namespace WebApp.Models
 
         private CalendarFolder FindDefaultCalendarFolder(string email, string password)
         {
-            return CalendarFolder.Bind(Service(email, password), WellKnownFolderName.Calendar, new PropertySet());
+            try
+            {
+                return CalendarFolder.Bind(Service(email, password), WellKnownFolderName.Calendar, new PropertySet());
+            }
+            catch
+            {
+                throw;
+            }
         }
 
 
         private CalendarFolder FindNamedCalendarFolder(string name, string email, string password)
         {
-            FolderView view = new FolderView(100);
-            view.PropertySet = new PropertySet(BasePropertySet.IdOnly);
-            view.PropertySet.Add(FolderSchema.DisplayName);
-            view.Traversal = FolderTraversal.Deep;
+            CalendarFolder calendar;
+            try
+            {
+                FolderView view = new FolderView(100);
+                view.PropertySet = new PropertySet(BasePropertySet.IdOnly);
+                view.PropertySet.Add(FolderSchema.DisplayName);
+                view.Traversal = FolderTraversal.Deep;
 
-            SearchFilter sfSearchFilter = new SearchFilter.IsEqualTo(FolderSchema.FolderClass, "IPF.Appointment");
+                SearchFilter sfSearchFilter = new SearchFilter.IsEqualTo(FolderSchema.FolderClass, "IPF.Appointment");
 
-            FindFoldersResults findFolderResults = Service(email, password).FindFolders(WellKnownFolderName.Root, sfSearchFilter, view);
-            return findFolderResults.Where(f => f.DisplayName == name).Cast<CalendarFolder>().FirstOrDefault();
+                FindFoldersResults findFolderResults = Service(email, password).FindFolders(WellKnownFolderName.Root, sfSearchFilter, view);
+                calendar = findFolderResults.Where(f => f.DisplayName == name).Cast<CalendarFolder>().FirstOrDefault();
+                if (calendar != null)
+                {
+                    return calendar;
+                }
+                else
+                {
+                    return CalendarFolder.Bind(Service(email, password), WellKnownFolderName.Calendar, new PropertySet());
+                }               
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public List<EventsItem> LoadAppointments(string email, string password)
@@ -43,27 +66,38 @@ namespace WebApp.Models
             DateTime startDate = DateTime.Now;
             DateTime endDate = startDate.AddDays(7);
 
-            //CalendarFolder calendar = FindNamedCalendarFolder("Testing Calendar");  // or 
-            CalendarFolder calendar = FindDefaultCalendarFolder(email,password);
-
-            CalendarView cView = new CalendarView(startDate, endDate, 50);
-            cView.PropertySet = new PropertySet(AppointmentSchema.Subject, AppointmentSchema.When, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Id);
-            FindItemsResults<Appointment> appointments = calendar.FindAppointments(cView);
-
-            foreach (var appt in appointments)
+            try
             {
-                eventsItems.Add(
-                    new EventsItem {
-                        Id = appt.Id.ToString(),                        
-                        Subject = appt.Subject,
-                        EventDate = DateTime.Parse(appt.Start.ToString()).Date,
-                        EventDay = DateTime.Parse(appt.Start.ToString()).DayOfWeek,
-                        EventStart = DateTime.Parse(appt.Start.ToString()).ToString("t"),
-                        EventEnd = DateTime.Parse(appt.End.ToString()).ToString("t"),
-                    });
-            }
+                CalendarFolder calendar = FindNamedCalendarFolder("officehours", email, password);  // or 
+                //CalendarFolder calendar = FindDefaultCalendarFolder(email, password);
 
-            return eventsItems;
+                CalendarView cView = new CalendarView(startDate, endDate, 50);
+                cView.PropertySet = new PropertySet(AppointmentSchema.Subject, AppointmentSchema.When, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Id);
+                FindItemsResults<Appointment> appointments = calendar.FindAppointments(cView);
+
+                if (appointments != null && appointments.Any())
+                {
+                    foreach (var appt in appointments)
+                    {
+                        eventsItems.Add(
+                            new EventsItem
+                            {
+                                Id = appt.Id.ToString(),
+                                Subject = appt.Subject,
+                                EventDate = DateTime.Parse(appt.Start.ToString()).Date,
+                                EventDay = DateTime.Parse(appt.Start.ToString()).DayOfWeek,
+                                EventStart = DateTime.Parse(appt.Start.ToString()).ToString("t"),
+                                EventEnd = DateTime.Parse(appt.End.ToString()).ToString("t"),
+                            });
+                    }
+                }
+
+                return eventsItems;
+            }
+            catch
+            {
+                throw;
+            }
 
         }
     }

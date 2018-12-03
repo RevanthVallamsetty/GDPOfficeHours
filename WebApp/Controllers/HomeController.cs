@@ -9,6 +9,8 @@ using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Graph;
 using WebApp.Helpers;
 using System.Net;
+using Resources;
+using System;
 
 namespace WebApp.Controllers
 {
@@ -75,7 +77,7 @@ namespace WebApp.Controllers
 
         public ActionResult Home()
         {
-            if(Session["facultyMail"] != null)
+            if(Session["facultyMail"] != null && Session["facultyPassword"] != null)
             {
                 var mail = Session["facultyMail"].ToString();
                 var password = Session["facultyPassword"].ToString();
@@ -144,8 +146,19 @@ namespace WebApp.Controllers
         {
             var mail = Session["facultyMail"].ToString();
             var password = Session["facultyPassword"].ToString();
-            var reults = homeService.LoadAppointments(mail, password);            
-            return View(reults);
+            try
+            {
+                var reults = homeService.LoadAppointments(mail, password);                
+                return View(reults);
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    message = string.Format(Resource.Error_Message, Request.RawUrl, "invalid parameters",
+                   "User not present or invalid password")
+                });
+            }
         }
 
         public void RefreshSession()
