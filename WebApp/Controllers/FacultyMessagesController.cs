@@ -123,7 +123,6 @@ namespace WebApp.Controllers
 
         // POST: FacultyMessages/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             StudentMessage studentMessage = db.messages.Find(id);
