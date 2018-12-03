@@ -77,11 +77,9 @@ namespace WebApp.Controllers
         {
             if(Session["facultyMail"] != null)
             {
-                var id = db.faculties.Find(Session["facultyMail"].ToString()).Id;
-                return RedirectToAction("Select", new
-                {
-                    id,
-                });
+                var mail = Session["facultyMail"].ToString();
+                var password = Session["facultyPassword"].ToString();
+                return RedirectToAction("Schedule", "Home");
             }
             else
             {
@@ -137,12 +135,15 @@ namespace WebApp.Controllers
         {
             
             var mail = Request.Form["Email"];
-            var password = Request.Form["Password"];            
-            return RedirectToAction("Schedule","Home", new { mail,password});
+            var password = Request.Form["Password"];
+            Session["facultyPassword"] = password;
+            return RedirectToAction("Schedule","Home");
         }
         
-        public ActionResult Schedule(string mail, string password)
+        public ActionResult Schedule()
         {
+            var mail = Session["facultyMail"].ToString();
+            var password = Session["facultyPassword"].ToString();
             var reults = homeService.LoadAppointments(mail, password);            
             return View(reults);
         }
