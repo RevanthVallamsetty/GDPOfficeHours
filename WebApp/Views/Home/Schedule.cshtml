@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApp.Models.EventsItem>
+@{
+    ViewBag.Title = "Office Hours";
+}
+<h2>Events</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventEnd)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventEnd)
+            </td>
+        </tr>
+    }
+</table>

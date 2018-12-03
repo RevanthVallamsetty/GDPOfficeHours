@@ -1,34 +1,23 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Protocols;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
-using System.Configuration;
 using System.Threading.Tasks;
-using System.Net.Http;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Text;
 using Microsoft.Graph;
 using WebApp.Helpers;
-using Resources;
-using WebApp.Models;
 using System.Net;
 
 namespace WebApp.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private OfficeHoursContext db = new OfficeHoursContext();
         EventsService eventsService = new EventsService();
+        HomeService homeService = new HomeService();
 
         public async Task<ActionResult> Index()
         {
@@ -120,7 +109,44 @@ namespace WebApp.Controllers
             return View(officeSchedules.ToList());
         }
 
+        // GET: Department/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var faculty = (from f in db.faculties where f.Id == id select f).FirstOrDefault();
+            if (faculty == null)
+            {
+                return HttpNotFound();
+            }
+            Session["facultyMail"] = faculty.Email;
+            IQueryable<OfficeSchedule> officeSchedules = db.officeSchedule
+                .Where(o => o.faculty.Email.Equals(faculty.ToString()))
+                .OrderBy(d => d.start_time);
+
+            return View(faculty);
+        }
+
+        // POST: Department/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public ActionResult Edit()
+        {
+            
+            var mail = Request.Form["Email"];
+            var password = Request.Form["Password"];            
+            return RedirectToAction("Schedule","Home", new { mail,password});
+        }
         
+        public ActionResult Schedule(string mail, string password)
+        {
+            var reults = homeService.LoadAppointments(mail, password);            
+            return View(reults);
+        }
+
         public void RefreshSession()
         {
             HttpContext.GetOwinContext().Authentication.Challenge(
