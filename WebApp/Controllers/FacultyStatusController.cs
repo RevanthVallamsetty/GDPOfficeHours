@@ -41,10 +41,10 @@ namespace WebApp.Controllers
         public ActionResult CreateNew()
         {
             String newStat = Request.Form["newStatus"];
-            if (Session["facultymail"] != null)
+            if (Session["facultymail"] != null && newStat != null)
             {
-                List<FacultyStatus> facultyStatuses = db.facultyStatuses.ToList();
-                if (facultyStatuses.Any(f => f.Status != newStat) && newStat!=null)
+                FacultyStatus facultyStatuses = db.facultyStatuses.Find(newStat);
+                if (facultyStatuses == null)
                 {
                     FacultyStatus newStatus = new FacultyStatus();
                     newStatus.Status = newStat;
@@ -61,8 +61,9 @@ namespace WebApp.Controllers
                     }
                     return RedirectToAction("Schedule", "Home");
                 }
+              
             }
-                return RedirectToAction("SelectStatus");
+                return RedirectToAction("SelectStatus").Error("Incorrect status Message");
         }
     }
 }
