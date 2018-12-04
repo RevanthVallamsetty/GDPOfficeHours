@@ -1,23 +1,25 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>Office Hours</h1>
-    <p class="lead">This App allows students to view faculty information and make appointments, submit papers</p>
-</div>
-
 <div class="row">
+    <div class="col-md-2"></div>
     <div class="col-md-4">
-        <h2>@Html.ActionLink("Faculty View", "SetRole", new { role = "Faculty" })</h2>
-        <p>
-            Faculty needs to login first to give permissions to this app to get access to his/her outlook calender
-        </p>
-        <p>Please click the sign-In with microsoft button on the top right to login</p>
-    </div>
+        <div class="card h-auto" style="width: 20rem;">
+            <img class="card-img-top h-auto" src="~/Content/Faculty.png" alt="Faculty">
+            <div class="card-body">
+                <h2 class="card-title">@Html.ActionLink("Faculty View", "SetRole", new { role = "Faculty" })</h2>
+                <p class="card-text">This provides the view of faculty</p>
+            </div>
+        </div>
+     </div>
     <div class="col-md-4">
-        <h2>@Html.ActionLink("Student View", "SetRole", new { role = "Student" })</h2>
-        <p>Please ensure that the URL is not editable and a new tab should not be allowed to created</p>
-    </div>
-    
+        <div class="card h-auto" style="width: 20rem;">
+            <img class="card-img-top h-auto" src="~/Content/student.png" alt="Student">
+            <div class="card-body">
+                <h2 class="card-title">@Html.ActionLink("Student View", "SetRole", new { role = "Student" })</h2>
+                    <p class="card-text">This provides the view of student</p>
+            </div>
+
+        </div>
+     </div>
 </div>

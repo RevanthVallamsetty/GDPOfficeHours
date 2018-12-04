@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<WebApp.Models.Faculty>
-
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-8">
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.first_Name)
+            First Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.last_Name)
+            Last Name
         </th>        
         <th></th>
     </tr>
@@ -31,3 +33,6 @@
     </tr>
 }
 </table>
+ </div>
+<div class="col-md-2"></div>
+    </div>
