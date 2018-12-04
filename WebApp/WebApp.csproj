@@ -206,6 +206,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\StudentMessagesController.cs" />
     <Compile Include="DAL\CaptureNote.cs" />
+    <Compile Include="Extensions\FlashMessageExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -224,6 +225,7 @@
     <Compile Include="Models\EventsService.cs" />
     <Compile Include="DAL\Faculty.cs" />
     <Compile Include="Models\FilesService.cs" />
+    <Compile Include="Models\FlashMessageExtensions.cs" />
     <Compile Include="Models\GraphResources.cs" />
     <Compile Include="Models\GraphService.cs" />
     <Compile Include="Models\GroupsService.cs" />
@@ -262,6 +264,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jQuery.flashMessage.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -351,6 +355,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Schedule.cshtml" />
+    <Content Include="Views\Shared\_Flash.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

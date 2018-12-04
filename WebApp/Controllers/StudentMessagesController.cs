@@ -37,7 +37,7 @@ namespace WebApp.Controllers
                 }
                 return View(studentMessages);
             }
-            return RedirectToAction("Home", "Home");
+            return RedirectToAction("Home", "Home").Information("Please Select the faculty");
         }
 
         // GET: StudentMessages/Details/5

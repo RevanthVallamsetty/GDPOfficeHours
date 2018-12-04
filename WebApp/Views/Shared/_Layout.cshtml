@@ -45,6 +45,7 @@
     <br />
     <br />
     <div class="container body-content">
+        @Html.Partial("_Flash")
         @RenderBody()
         <hr />
         <footer>
@@ -54,7 +55,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery.cookie")
+    @Scripts.Render("~/bundles/jquery.flashmessage")
+
     @RenderSection("scripts", required: false)
+    
     <script type="text/javascript">
         $(document).ready(function () {
             var url = window.location;
