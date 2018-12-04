@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         public ActionResult SelectStatus(String Status)
         {
             String stat = Request.Form["statusList"];
-            if (Session["facultymail"] != null)
+            if (Session["facultymail"] != null && stat != "Select a status")
             {
                 Faculty fac = db.faculties.Find(Session["facultymail"]);
                 if (fac != null)
@@ -34,6 +34,10 @@ namespace WebApp.Controllers
                     db.SaveChanges();
                 }
             }
+            else
+            {
+                return RedirectToAction("SelectStatus").Error("Select any Status from dropdown");
+            }
             return RedirectToAction("Schedule","Home");
         }
 
@@ -41,7 +45,7 @@ namespace WebApp.Controllers
         public ActionResult CreateNew()
         {
             String newStat = Request.Form["newStatus"];
-            if (Session["facultymail"] != null && newStat != null)
+            if (Session["facultymail"] != null && newStat != "")
             {
                 FacultyStatus facultyStatuses = db.facultyStatuses.Find(newStat);
                 if (facultyStatuses == null)

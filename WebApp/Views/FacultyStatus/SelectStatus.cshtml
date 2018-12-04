@@ -6,7 +6,7 @@
 <h2>SelectStatus</h2>
 @using (Html.BeginForm("SelectStatus", "FacultyStatus", FormMethod.Post))
 {
-    @Html.DropDownList("statusList", ViewBag.StaList as SelectList, "Available")
+    @Html.DropDownList("statusList", ViewBag.StaList as SelectList)
     <input type="submit" />
 }
 </div>

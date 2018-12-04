@@ -2,9 +2,10 @@
 @{
     ViewBag.Title = "Office Hours";
 }
-<div style="padding-bottom: 30px;">
-    <h3>@{Html.RenderAction("status");}</h3>
-</div>
+<div class="row">
+
+<div class="col-md-1"></div>
+<div class="col-md-8">
 <h3>Schedule</h3>
 
 <table class="table col-5">
@@ -36,3 +37,10 @@
         }
     }
 </table>
+</div>
+<div class="col-md-3">
+<div style="padding-bottom: 30px;">
+    @{Html.RenderAction("status");}
+</div>
+</div>
+</div>
