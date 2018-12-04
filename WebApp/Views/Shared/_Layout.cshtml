@@ -16,8 +16,8 @@
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">@Html.ActionLink("Home", "Home", "Home", null, new { @class = "nav-link" })</li>
                     @if (Request.IsAuthenticated && (Session["Role"] != null && Session["Role"].ToString().Equals("Faculty")))
                     {

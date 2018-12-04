@@ -64,6 +64,20 @@ namespace WebApp.Models
         public string Email { get; set; }
     }
 
+    public class scheduleModel
+    {
+        public string EventDate { set; get; }
+        public System.DayOfWeek EventDay { get; set; }
+        public List<EventTimes> eventTimeList { get; set; }
+    }
+
+    public class EventTimes
+    {
+        public string Subject { get; set; }
+        public string EventStart { get; set; }        
+        public string EventEnd { get; set; }
+    }
+
     // View model to display a collection of one or more entities returned from the Microsoft Graph. 
     public class ResultsViewModel
     {

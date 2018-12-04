@@ -1,49 +1,38 @@
-﻿@model IEnumerable<WebApp.Models.EventsItem>
+﻿@model IEnumerable<WebApp.Models.scheduleModel>
 @{
     ViewBag.Title = "Office Hours";
 }
 <div style="padding-bottom: 30px;">
-<h3>@{Html.RenderAction("status");}</h3>
+    <h3>@{Html.RenderAction("status");}</h3>
 </div>
-<h2>Events</h2>
+<h3>Schedule</h3>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Subject)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventDay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventEnd)
-        </th>
-        <th></th>
-    </tr>
+<table class="table col-5">
     @foreach (var item in Model)
     {
+
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventDate)
-            </td>
-            <td>
+            <th>
                 @Html.DisplayFor(modelItem => item.EventDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventEnd)
-            </td>
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.EventDate)
+            </th>
+            <th></th>
         </tr>
+        foreach (var e in item.eventTimeList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => e.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => e.EventStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => e.EventEnd)
+                </td>
+            </tr>
+        }
     }
 </table>

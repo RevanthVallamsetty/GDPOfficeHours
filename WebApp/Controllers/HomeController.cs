@@ -149,16 +149,43 @@ namespace WebApp.Controllers
         {
             var mail = Session["facultyMail"].ToString();
             var password = Session["facultyPassword"].ToString();
+            List<scheduleModel> schdMdlList = new List<scheduleModel>();
+            scheduleModel scheduleModel;
+
             try
             {
-                var reults = homeService.LoadAppointments(mail, password);                
-                return View(reults);
+                var results = homeService.LoadAppointments(mail, password);
+
+                var groupResults = results.GroupBy(s => s.EventDate).ToList();
+
+
+                if (groupResults != null && groupResults.Any())
+                {
+                    foreach(var eveitm in groupResults)
+                    {
+                        scheduleModel = new scheduleModel();
+                        scheduleModel.eventTimeList = new List<EventTimes>();
+                        foreach (var item in eveitm)
+                        {
+                            scheduleModel.EventDate = item.EventDate.ToString("d");
+                            scheduleModel.EventDay = item.EventDay;
+                            scheduleModel.eventTimeList.Add(new EventTimes() {
+                                Subject = item.Subject,
+                                EventEnd = item.EventEnd,
+                                EventStart = item.EventStart
+                            });
+                        }
+                        schdMdlList.Add(scheduleModel);
+                    }
+                }
+
+                return View(schdMdlList);
             }
             catch(Exception e)
             {
                 return RedirectToAction("Index", "Error", new
                 {
-                    message = string.Format(Resource.Error_Message, Request.RawUrl, "invalid parameters",
+                    message = string.Format(Resource.Error_Message, Request.RawUrl, e.Message,
                    "User not present or invalid password")
                 });
             }
