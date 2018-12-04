@@ -26,6 +26,7 @@
                             <li class="nav-item">@Html.ActionLink("Events", "Index", "Events", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("ViewNote", "Index", "Capture", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("Messages", "Index", "FacultyMessages", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Update your Status", "SelectStatus", "FacultyStatus", null, new { @class = "nav-link" })</li>
                         </text>
                     }
                     @if (Request.IsAuthenticated && (Session["Role"] != null && Session["Role"].ToString().Equals("Student")))

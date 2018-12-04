@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using WebApp.DAL;
 
 namespace WebApp.Models
 {
@@ -17,5 +18,6 @@ namespace WebApp.Models
         public DbSet<Faculty> faculties { get; set; }
         public DbSet<StudentMessage> messages { get; set; }
         public DbSet<CaptureNote> captureNotes { get; set; }
-    }
+        public DbSet<FacultyStatus> facultyStatuses { get; set; }
+       }
 }

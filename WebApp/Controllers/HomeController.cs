@@ -11,6 +11,8 @@ using WebApp.Helpers;
 using System.Net;
 using Resources;
 using System;
+using WebApp.DAL;
+using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
@@ -20,6 +22,7 @@ namespace WebApp.Controllers
         private OfficeHoursContext db = new OfficeHoursContext();
         EventsService eventsService = new EventsService();
         HomeService homeService = new HomeService();
+        UsersService usersService = new UsersService();
 
         public async Task<ActionResult> Index()
         {
@@ -167,5 +170,12 @@ namespace WebApp.Controllers
                 new AuthenticationProperties { RedirectUri = "/Home/ReadMail" },
                 OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }
+        public PartialViewResult status()
+        {
+            Faculty fac = db.faculties.Find(Session["facultymail"]);
+            return PartialView("FacultyStatus",fac);
+        }
+       
+
     }
 }
