@@ -24,8 +24,12 @@ namespace WebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            Session["val"] = "";
-            return View();
+            if (Session["facultyMail"] != null)
+            {
+                Session["val"] = "";
+                return View();
+            }
+            return RedirectToAction("Home", "Home");
         }
 
         

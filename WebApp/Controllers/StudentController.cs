@@ -265,36 +265,41 @@ namespace WebApp.Controllers
         {
             List<EventsItem> results = new List<EventsItem>();
             List<EventsItem> filteredResults = new List<EventsItem>();
-            try
+
+            if (Session["facultyMail"] != null)
             {
-
-                // Initialize the GraphServiceClient.
-                GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
-
-                // Get events.
-                results = await eventsService.GetMyAppointments(graphClient);
-
-                if(results != null && results.Any())
+                try
                 {
-                    foreach(EventsItem item in results)
+
+                    // Initialize the GraphServiceClient.
+                    GraphServiceClient graphClient = SDKHelper.GetAuthenticatedClient();
+
+                    // Get events.
+                    results = await eventsService.GetMyAppointments(graphClient);
+
+                    if (results != null && results.Any())
                     {
-                        foreach(Attendee attendee in item.Attendees)
+                        foreach (EventsItem item in results)
                         {
-                            if (attendee.EmailAddress.Address.Equals(Session["facultyMail"].ToString()))
-                                filteredResults.Add(item);
+                            foreach (Attendee attendee in item.Attendees)
+                            {
+                                if (attendee.EmailAddress.Address.Equals(Session["facultyMail"].ToString()))
+                                    filteredResults.Add(item);
+                            }
                         }
                     }
                 }
-            }
-            catch (ServiceException se)
-            {
-                if (se.Error.Message == Resource.Error_AuthChallengeNeeded) return new EmptyResult();
+                catch (ServiceException se)
+                {
+                    if (se.Error.Message == Resource.Error_AuthChallengeNeeded) return new EmptyResult();
 
-                // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
-                return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
+                    // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
+                    return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
 
+                }
+                return View("Index", filteredResults);
             }
-            return View("Index",filteredResults);
+            return RedirectToAction("Home","Home");
         }
 
         // Get user's calendar view.
