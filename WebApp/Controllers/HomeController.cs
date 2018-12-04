@@ -179,15 +179,14 @@ namespace WebApp.Controllers
                     }
                 }
 
-                return View(schdMdlList);
+                return View(schdMdlList).Success("Success");
             }
             catch(Exception e)
             {
-                return RedirectToAction("Index", "Error", new
+                return RedirectToAction("Edit", "Home", new
                 {
-                    message = string.Format(Resource.Error_Message, Request.RawUrl, e.Message,
-                   "User not present or invalid password")
-                });
+                    db.faculties.Find(mail).Id
+                }).Error("Invalid Credentials");
             }
         }
 
