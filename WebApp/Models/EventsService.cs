@@ -33,17 +33,24 @@ namespace WebApp.Models
         {
             List<EventsItem> items = new List<EventsItem>();
             ICalendarEventsCollectionPage events;
+            string calendarId = null;
 
             //Get Calendar of office hours
             // Define the required calendar.
             List<QueryOption> options = new List<QueryOption>(); 
             options.Add(new QueryOption("filter", "startswith(name, 'officehours')"));
-            var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
+            var calander = await graphClient.Me.Calendars.Request().GetAsync();
 
+            foreach(var cal in calander)
+            {
+                if (cal.Name.Equals("officehours"))
+                    calendarId = cal.Id;
+            }
+            
 
             // Get events.
-            if(calander != null)
-                events = await graphClient.Me.Calendars[calander[0].Id]
+            if(calendarId != null)
+                events = await graphClient.Me.Calendars[calendarId]
                   .Events.Request().GetAsync();
             else
                 events = await graphClient.Me.Calendar.Events.Request().GetAsync();
