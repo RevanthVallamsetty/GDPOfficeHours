@@ -230,6 +230,7 @@
     <Compile Include="Models\EventsService.cs" />
     <Compile Include="DAL\Faculty.cs" />
     <Compile Include="Models\FilesService.cs" />
+    <Compile Include="Models\FlashMessageExtensions.cs" />
     <Compile Include="Models\GraphResources.cs" />
     <Compile Include="Models\GraphService.cs" />
     <Compile Include="Models\GroupsService.cs" />
