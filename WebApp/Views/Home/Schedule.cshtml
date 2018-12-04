@@ -8,7 +8,7 @@
 <div class="col-md-8">
 <h3>Schedule</h3>
 
-<table class="table col-5">
+<table class="table">
     @foreach (var item in Model)
     {
 
@@ -29,9 +29,8 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => e.EventStart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => e.EventEnd)
+                
+                   - @Html.DisplayFor(modelItem => e.EventEnd)
                 </td>
             </tr>
         }
