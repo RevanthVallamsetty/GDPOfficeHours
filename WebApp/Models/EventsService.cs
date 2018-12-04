@@ -43,7 +43,7 @@ namespace WebApp.Models
 
             foreach(var cal in calander)
             {
-                if (cal.Name.Equals("officehours"))
+                if (cal.Name.ToUpper().Equals("OFFICEHOURS"))
                     calendarId = cal.Id;
             }
             

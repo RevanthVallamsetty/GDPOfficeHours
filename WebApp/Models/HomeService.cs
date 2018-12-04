@@ -43,7 +43,7 @@ namespace WebApp.Models
                 SearchFilter sfSearchFilter = new SearchFilter.IsEqualTo(FolderSchema.FolderClass, "IPF.Appointment");
 
                 FindFoldersResults findFolderResults = Service(email, password).FindFolders(WellKnownFolderName.Root, sfSearchFilter, view);
-                calendar = findFolderResults.Where(f => f.DisplayName == name).Cast<CalendarFolder>().FirstOrDefault();
+                calendar = findFolderResults.Where(f => f.DisplayName.ToUpper().Equals(name.ToUpper())).Cast<CalendarFolder>().FirstOrDefault();
                 if (calendar != null)
                 {
                     return calendar;
