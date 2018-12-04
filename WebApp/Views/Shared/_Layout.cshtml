@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Office Hours Application</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")  
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    @Scripts.Render("~/bundles/modernizr")    
 </head>
 <body>
-    <div class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+    <div class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand float-left" href="#">@Html.ActionLink("OfficeHours", "Index", "Home", null, new { @class = "navbar-brand" })</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler ml-auto hidden-sm-up float-xs-right pull-right" data-toggle="collapse" data-target=".navbar-collapse"
+                        aria-expanded="false" aria-label="Toggle navigation"></button>
+                @Html.ActionLink("OfficeHours", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">@Html.ActionLink("Home", "Home", "Home", null, new { @class = "nav-link" })</li>
@@ -23,10 +22,11 @@
                     {
                         <text>
                             @*<li class="nav-item">@Html.ActionLink("Read Mail", "ReadMail", "Home", null, new { @class = "nav-link" })</li>
-                                <li class="nav-item">@Html.ActionLink("Send Mail", "SendMail", "Home", null, new { @class = "nav-link" })</li>*@
+                <li class="nav-item">@Html.ActionLink("Send Mail", "SendMail", "Home", null, new { @class = "nav-link" })</li>*@
                             <li class="nav-item">@Html.ActionLink("Events", "Index", "Events", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("ViewNote", "Index", "Capture", null, new { @class = "nav-link" })</li>
                             <li class="nav-item">@Html.ActionLink("Messages", "Index", "FacultyMessages", null, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Update your Status", "SelectStatus", "FacultyStatus", null, new { @class = "nav-link" })</li>
                         </text>
                     }
                     @if (Request.IsAuthenticated && (Session["Role"] != null && Session["Role"].ToString().Equals("Student")))
@@ -46,7 +46,6 @@
     <br />
     <br />
     <div class="container body-content">
-        @Html.Partial("_Flash")
         @RenderBody()
         <hr />
         <footer>
@@ -56,33 +55,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jquery.cookie")
-    @Scripts.Render("~/bundles/jquery.flashmessage")
-    @Scripts.Render("~/bundles/jquery.timepicker")
-    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
     @RenderSection("scripts", required: false)
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var url = window.location;
-            $('ul.nav a[href="' + url + '"]').parent().addClass('active');
-            $('ul.nav a').filter(function () {
-                return this.href == url;
-            }).parent().addClass('active');
-        });
-
-        $('.timepicker').timepicker({
-            timeFormat: 'hh:mm p',
-            interval: 15,
-            minTime: '8',
-            maxTime: '5:00pm',
-            defaultTime: '08',
-            startTime: '08:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
-    </script>
 </body>
 </html>

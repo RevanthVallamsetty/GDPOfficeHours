@@ -1,0 +1,6 @@
+﻿
+
+@using (Html.BeginForm("SelectStatus", "FacultyStatus", FormMethod.Post)) { 
+    @Html.DropDownList("statusList", ViewBag.StaList as SelectList, "Select a status")
+<input type="submit" />
+}

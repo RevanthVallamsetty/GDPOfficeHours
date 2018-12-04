@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CaptureController.cs" />
     <Compile Include="Controllers\FacultyMessagesController.cs" />
+    <Compile Include="Controllers\FacultyStatusController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -206,7 +207,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\StudentMessagesController.cs" />
     <Compile Include="DAL\CaptureNote.cs" />
-    <Compile Include="Extensions\FlashMessageExtensions.cs" />
+    <Compile Include="DAL\FacultyStatus.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,11 +222,14 @@
     <Compile Include="Migrations\201811282128588_NameChangeStudentMessage.Designer.cs">
       <DependentUpon>201811282128588_NameChangeStudentMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812032138154_addstatustable.cs" />
+    <Compile Include="Migrations\201812032138154_addstatustable.Designer.cs">
+      <DependentUpon>201812032138154_addstatustable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EventsService.cs" />
     <Compile Include="DAL\Faculty.cs" />
     <Compile Include="Models\FilesService.cs" />
-    <Compile Include="Models\FlashMessageExtensions.cs" />
     <Compile Include="Models\GraphResources.cs" />
     <Compile Include="Models\GraphService.cs" />
     <Compile Include="Models\GroupsService.cs" />
@@ -248,8 +252,6 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\jquery.timepicker.css" />
-    <Content Include="Content\jquery.timepicker.min.css" />
     <Content Include="Content\microsoft.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -266,10 +268,6 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery.cookie.js" />
-    <Content Include="Scripts\jQuery.flashMessage.js" />
-    <Content Include="Scripts\jquery.timepicker.js" />
-    <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -359,7 +357,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Schedule.cshtml" />
-    <Content Include="Views\Shared\_Flash.cshtml" />
+    <Content Include="Views\Shared\FacultyStatus.cshtml" />
+    <Content Include="Views\Shared\AllStatuses.cshtml" />
+    <Content Include="Views\FacultyStatus\SelectStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
@@ -383,7 +383,11 @@
     <EmbeddedResource Include="Migrations\201811282128588_NameChangeStudentMessage.resx">
       <DependentUpon>201811282128588_NameChangeStudentMessage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812032138154_addstatustable.resx">
+      <DependentUpon>201812032138154_addstatustable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

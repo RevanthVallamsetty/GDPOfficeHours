@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "SelectStatus";
+}
+
+<h2>SelectStatus</h2>
+@using (Html.BeginForm("SelectStatus", "FacultyStatus", FormMethod.Post))
+{
+    @Html.DropDownList("statusList", ViewBag.StaList as SelectList, "Select a status")
+    <input type="submit" />
+}
+
+<h2>To add a custom status enter below:</h2>
+@using (Html.BeginForm("CreateNew","FacultyStatus", FormMethod.Post))
+{
+    <input type="text" name="newStatus" />
+    <input type="submit" />
+}
