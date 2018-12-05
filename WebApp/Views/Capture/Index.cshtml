@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<WebApp.Models.CaptureNoteModel>
 
+@{
+    ViewBag.Title = "Captured Notes";
+}
+
+<h2>Captured Notes</h2>
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.StudentName)
-        </th>        
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.CapturedDate)
         </th>
@@ -14,21 +20,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentName)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.CapturedDate)
-        </td>
-        <td>
-            <a href="@item.NoteLink" target="_blank">Open</a>
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CapturedDate)
+            </td>
+            <td>
+                <a href="@item.NoteLink" target="_blank">Open</a>
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
