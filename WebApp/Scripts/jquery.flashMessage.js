@@ -1,12 +1,12 @@
 ﻿$.fn.flashMessage = function (options) {
     var target = this;
-    options = $.extend({}, options, { timeout: 5000, alert: 'alert-info' });
+    options = $.extend({}, options, { timeout: 3000, alert: 'alert-info' });
 
     if (!options.message) {
         setFlashMessageFromCookie(options);
     }
 
-    if (options.message) {
+    if (options.message != null) {
         var alertType = options.alert.toString().toLowerCase();
         
         if(alertType === "error") {
@@ -41,7 +41,7 @@
         $.each(new Array('Success', 'Error', 'Warning', 'Info'), function (i, alert) {
             var cookie = $.cookie("Flash." + alert);
 
-            if (cookie) {
+            if (cookie != null) {
                 options.message = cookie;
                 options.alert = alert;
 

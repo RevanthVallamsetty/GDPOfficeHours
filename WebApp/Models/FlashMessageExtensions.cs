@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -29,7 +30,7 @@ internal static class FlashMessageExtensions
 
     private static void CreateCookieWithFlashMessage(Notification notification, string message)
     {
-        HttpContext.Current.Response.Cookies.Add(new HttpCookie(string.Format("Flash.{0}", notification), message) { Path = "/" });
+        HttpContext.Current.Response.Cookies.Add(new HttpCookie(string.Format("Flash.{0}", notification), message) { Path = "/"});
     }
 
     private enum Notification
