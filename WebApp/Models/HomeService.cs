@@ -106,8 +106,8 @@ namespace WebApp.Models
         {
             List<JsonEventsSchedule> eventsItems = new List<JsonEventsSchedule>();
 
-            DateTime startDate = DateTime.Now;
-            DateTime endDate = startDate.AddDays(7);
+            DateTime startDate = DateTime.Now.Date;
+            DateTime endDate = startDate.AddDays(30);
 
             try
             {
