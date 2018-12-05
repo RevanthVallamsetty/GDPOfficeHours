@@ -74,7 +74,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
 
-            return RedirectToAction("Index", "Student");
+            return RedirectToAction("Index", "Student").Success("Note captured successfully.");
         }
 
         [HttpGet]

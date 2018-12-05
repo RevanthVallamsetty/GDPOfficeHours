@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CaptureController.cs" />
+    <Compile Include="Controllers\FacultiesController.cs" />
     <Compile Include="Controllers\FacultyMessagesController.cs" />
     <Compile Include="Controllers\FacultyStatusController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
@@ -385,6 +386,7 @@
     <Content Include="Views\FacultyStatus\SelectStatus.cshtml" />
     <Content Include="Views\Shared\_Flash.cshtml" />
     <Content Include="Views\Home\Calendar.cshtml" />
+    <Content Include="Views\Faculties\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

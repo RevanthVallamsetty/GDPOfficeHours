@@ -146,7 +146,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Events");
+            return RedirectToAction("Index", "Events").Success("Event Created");
         }
 
         // Get a specified event.
@@ -245,7 +245,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Events");
+            return RedirectToAction("Index", "Events").Success("Event Edited");
         }        
 
         // Delete an event.
@@ -311,7 +311,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Events");
+            return RedirectToAction("Index", "Events").Success("Event Deleted");
         }
 
         // Accept a meeting request.

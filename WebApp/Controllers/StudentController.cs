@@ -92,7 +92,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Student");
+            return RedirectToAction("Index", "Student").Success("Appointment Created Successfully and sent to Faculty, Check email for response");
         }
 
         // Get a specified event.
@@ -191,7 +191,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Student");
+            return RedirectToAction("Index", "Student").Success("Event edited successfully");
         }
 
         // Delete an event.
@@ -257,7 +257,7 @@ namespace WebApp.Controllers
                 // Personal accounts that aren't enabled for the Outlook REST API get a "MailboxNotEnabledForRESTAPI" or "MailboxNotSupportedForRESTAPI" error.
                 return RedirectToAction("Index", "Error", new { message = string.Format(Resource.Error_Message, Request.RawUrl, se.Error.Code, se.Error.Message) });
             }
-            return RedirectToAction("Index", "Student");
+            return RedirectToAction("Index", "Student").Success("Event Deleted");
         }
 
         // Get events.
@@ -373,7 +373,7 @@ namespace WebApp.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }            
 
-            return RedirectToAction("MessageView", "Student");
+            return RedirectToAction("MessageView", "Student").Success("Message created and sent to faculty");
 
         }
 
