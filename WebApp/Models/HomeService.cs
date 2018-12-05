@@ -1,6 +1,7 @@
 ﻿using Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -100,5 +101,63 @@ namespace WebApp.Models
             }
 
         }
+
+        public List<JsonEventsSchedule> GetAppointments(string email, string password)
+        {
+            List<JsonEventsSchedule> eventsItems = new List<JsonEventsSchedule>();
+
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = startDate.AddDays(7);
+
+            try
+            {
+                CalendarFolder calendar = FindNamedCalendarFolder("officehours", email, password);  // or 
+                //CalendarFolder calendar = FindDefaultCalendarFolder(email, password);
+
+                CalendarView cView = new CalendarView(startDate, endDate, 50);
+                cView.PropertySet = new PropertySet(AppointmentSchema.Subject, AppointmentSchema.When, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Id);
+                FindItemsResults<Appointment> appointments = calendar.FindAppointments(cView);
+
+                if (appointments != null && appointments.Any())
+                {
+                    foreach (var appt in appointments)
+                    {
+                        eventsItems.Add(
+                            new JsonEventsSchedule
+                            {
+                                id = appt.Id.ToString(),
+                                title = appt.Subject,
+                                start = ConvertToiso8601(appt.Start),
+                                end = ConvertToiso8601(appt.End),
+                            });
+                    }
+                }
+
+                return eventsItems;
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
+        public string ConvertToiso8601(DateTime date)
+        {
+            // Your input
+            DateTime dt = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second,
+                date.Millisecond, DateTimeKind.Utc);
+
+            // ISO8601 with 7 decimal places
+            string s1 = dt.ToString("o", CultureInfo.InvariantCulture);
+            //=> "2017-06-26T20:45:00.0700000Z"
+
+            // ISO8601 with 3 decimal places
+            string s2 = dt.ToString("yyyy-MM-dd'T'HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            //=> "2017-06-26T20:45:00.070Z"
+
+            return s2;
+        }
+
     }
 }

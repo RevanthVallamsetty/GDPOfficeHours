@@ -2,44 +2,14 @@
 @{
     ViewBag.Title = "Office Hours";
 }
-<div class="row">
 
-<div class="col-md-1"></div>
-<div class="col-md-8">
-<h3>Schedule</h3>
+<div class="col-md-5">
+    <div style="padding-bottom: 30px;">
+        @{Html.RenderAction("status");}
+    </div>
+</div>
 
-<table class="table">
-    @foreach (var item in Model)
-    {
+@Html.Partial("Calendar")
 
-        <tr>
-            <th>
-                @Html.DisplayFor(modelItem => item.EventDay)
-            </th>
-            <th>
-                @Html.DisplayFor(modelItem => item.EventDate)
-            </th>
-            <th></th>
-        </tr>
-        foreach (var e in item.eventTimeList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => e.Subject)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => e.EventStart)
-                
-                   - @Html.DisplayFor(modelItem => e.EventEnd)
-                </td>
-            </tr>
-        }
-    }
-</table>
-</div>
-<div class="col-md-3">
-<div style="padding-bottom: 30px;">
-    @{Html.RenderAction("status");}
-</div>
-</div>
-</div>
+
+

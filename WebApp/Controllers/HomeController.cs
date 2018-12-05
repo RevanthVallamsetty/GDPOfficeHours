@@ -13,6 +13,7 @@ using Resources;
 using System;
 using WebApp.DAL;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace WebApp.Controllers
 {
@@ -182,6 +183,31 @@ namespace WebApp.Controllers
                 return View(schdMdlList).Success("Success");
             }
             catch(Exception e)
+            {
+                return RedirectToAction("Edit", "Home", new
+                {
+                    db.faculties.Find(mail).Id
+                }).Error("Invalid Credentials");
+            }
+        }
+
+        public ActionResult GetScheduleJason()
+        {
+            var mail = Session["facultyMail"].ToString();
+            var password = Session["facultyPassword"].ToString();
+            List<scheduleModel> schdMdlList = new List<scheduleModel>();
+            var serializer = new JavaScriptSerializer();
+            // Initialization.  
+            JsonResult result = new JsonResult();
+
+            try
+            {
+                var results = homeService.GetAppointments(mail, password);
+                // Processing.
+                result = this.Json(results, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+            catch (Exception e)
             {
                 return RedirectToAction("Edit", "Home", new
                 {

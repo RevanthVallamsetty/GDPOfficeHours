@@ -78,6 +78,14 @@ namespace WebApp.Models
         public string EventEnd { get; set; }
     }
 
+    public class JsonEventsSchedule
+    {
+        public string id { get; set; }
+        public string title { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+    }
+
     // View model to display a collection of one or more entities returned from the Microsoft Graph. 
     public class ResultsViewModel
     {
