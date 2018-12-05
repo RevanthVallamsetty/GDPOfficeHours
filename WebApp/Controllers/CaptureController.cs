@@ -99,7 +99,7 @@ namespace WebApp.Controllers
             var capture = db.captureNotes.Find(id);
             db.captureNotes.Remove(capture);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index").Success("Note Deleted");
         }
     }
 }

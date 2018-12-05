@@ -82,7 +82,7 @@ namespace WebApp.Controllers
                 
                 db.messages.Add(studentMessage);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index").Success("Message created and sent to faculty.");
             }
 
             ViewBag.Email = new SelectList(db.faculties, "Email", "first_Name", studentMessage.Email);
@@ -128,7 +128,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Email = new SelectList(db.faculties, "Email", "first_Name", studentMessage.Email);
-            return View(studentMessage);
+            return View(studentMessage).Success("Message Edited.");
         }
 
         // GET: StudentMessages/Delete/5
@@ -153,7 +153,7 @@ namespace WebApp.Controllers
             StudentMessage studentMessage = db.messages.Find(id);
             db.messages.Remove(studentMessage);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index").Success("Message deleted.");
         }
 
         protected override void Dispose(bool disposing)
