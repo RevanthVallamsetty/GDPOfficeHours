@@ -1,16 +1,12 @@
 ﻿using Microsoft.Graph;
-using WebApp.Helpers;
-using WebApp.Models;
 using Resources;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Net;
-using System.Globalization;
-using WebApp.Models;
 using System.Data.Entity.Infrastructure;
 using System.IO;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using WebApp.Helpers;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
