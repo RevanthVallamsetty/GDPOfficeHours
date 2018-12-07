@@ -58,7 +58,17 @@ namespace WebApp.Controllers
                 try
                 {
                     db.captureNotes.Add(captureNote);
-                    db.SaveChanges();
+                    var val = db.SaveChanges();
+                    if(val != 0)
+                    {
+                        var path = Server.MapPath("~/WebImages/");
+                        System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+                        foreach (FileInfo file in di.GetFiles())
+                        {
+                            file.Delete();
+                        }
+                    }
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
