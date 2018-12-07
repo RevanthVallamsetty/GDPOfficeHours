@@ -135,18 +135,27 @@ namespace WebApp.Models
         {
             EventsItem items = new EventsItem();
             Event createdEvent;
+            string calendarId = null;
 
             //Get Calendar of office hours
             // Define the required calendar.
             List<QueryOption> options = new List<QueryOption>();
             options.Add(new QueryOption("filter", "startswith(name, 'officehours')"));
-            var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
+            //var calander = await graphClient.Me.Calendars.Request(options).GetAsync();
+            var calander = await graphClient.Me.Calendars.Request().GetAsync();
+
+            foreach (var cal in calander)
+            {
+                if (cal.Name.ToUpper().Equals("OFFICEHOURS"))
+                    calendarId = cal.Id;
+            }
+
 
             // Add the event.
-            if(calander != null)
+            if (calander != null)
             {
                 //Add event to specific calander
-                createdEvent = await graphClient.Me.Calendars[calander[0].Id].Events.Request().AddAsync(new Event
+                createdEvent = await graphClient.Me.Calendars[calendarId].Events.Request().AddAsync(new Event
                 {
                     Subject = eventsItem.Subject,
                     Start = eventsItem.StartTime,
