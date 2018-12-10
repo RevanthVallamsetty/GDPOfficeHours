@@ -1,0 +1,50 @@
+Prerequisites
+-------------------------------------------------------------------------------------
+This sample requires the following:
+
+1. Visual Studio 2017
+2. Either a Microsoft account or Office 365 for business account. You can sign up for an Office 365 Developer subscription 
+   that includes the resources that you need to start building Office 365 apps.
+3. Register the application
+4. Sign into the App Registration Portal using either your personal or work or school account.
+
+-------------------------------------------------------------------------------------
+Choose Add an app.
+-------------------------------------------------------------------------------------
+1. Enter a name for the app, and choose Create application.
+
+2. The registration page displays, listing the properties of your app.
+
+3. Copy the Application Id. This is the unique identifier for your app.
+
+4. Under Application Secrets, choose Generate New Password. Copy the password from the New password generated dialog.
+
+5. You'll use the application ID and password to configure the sample app in the next section.
+
+6. Under Platforms, choose Add platform.
+
+7. Choose Web.
+
+8. Make sure the Allow Implicit Flow check box is selected, and enter https://localhost:44326/ as the Redirect URI.
+
+9. The Allow Implicit Flow option enables the hybrid flow. During authentication, this enables the app to receive both sign-in 
+   info (the id_token) and artifacts (in this case, an authorization code) that the app can use to obtain an access token.
+
+10. Choose Save.
+
+-------------------------------------------------------------------------------------
+Build and run the sample
+-------------------------------------------------------------------------------------
+1. Download or clone the https://github.com/RevanthVallamsetty/GDPOfficeHours.
+
+2. Open the sample solution in Visual Studio.
+
+3. In the Web.config file in the root directory, replace the ida:AppId and ida:AppSecret placeholder values with the 
+   application ID and password that you copied during app registration.
+
+4. Press F5 to build and run the sample. This will restore NuGet package dependencies and open the app.
+
+5. If you see any errors while installing packages, make sure the local path where you placed the solution is not too 
+   long/deep. Moving the solution closer to the root of your drive resolves this issue.
+
+6. Sign in with your personal or work or school account and grant the requested permissions.
