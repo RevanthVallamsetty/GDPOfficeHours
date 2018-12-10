@@ -48,3 +48,9 @@ Build and run the sample
    long/deep. Moving the solution closer to the root of your drive resolves this issue.
 
 6. Sign in with your personal or work or school account and grant the requested permissions.
+
+
+-------------------------------------------------------------------------------------
+Change Connection String in web config
+-------------------------------------------------------------------------------------
+change Data Source in <connectionStrings> tag to your sql server data source name.
