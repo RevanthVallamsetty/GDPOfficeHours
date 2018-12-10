@@ -54,3 +54,8 @@ Build and run the sample
 Change Connection String in web config
 -------------------------------------------------------------------------------------
 change Data Source in <connectionStrings> tag to your sql server data source name.
+
+For more info visit following links:
+https://github.com/microsoftgraph/aspnet-connect-sample
+https://github.com/microsoftgraph/aspnet-connect-rest-sample#microsoft-graph-connect-sample-for-aspnet-46-rest
+https://docs.microsoft.com/en-us/graph/training/aspnet-tutorial
