@@ -13,7 +13,7 @@ namespace WebApp.Controllers.Tests
     {
         [TestMethod()]
         public void SignInTest()
-        {
+        { 
             Assert.IsTrue(true);
         }
 
